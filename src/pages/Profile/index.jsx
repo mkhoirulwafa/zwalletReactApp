@@ -19,7 +19,7 @@ class ProfileData extends React.Component {
   };
 
   componentDidMount() {
-    Axios.get(`http://localhost:8000/profile`, { params: { id: 7 } }).then(
+    Axios.get(`https://zwallet-api-wafa.herokuapp.com/profile`, { params: { id: 7 } }).then(
       (res) => {
         console.log(res.data);
         const data = res.data.data;
@@ -28,7 +28,7 @@ class ProfileData extends React.Component {
     );
     Axios({
       method: "post",
-      url: `http://localhost:8000/topup`,
+      url: `https://zwallet-api-wafa.herokuapp.com/topup`,
       data: {
         number: this.state.number,
         title: this.state.title,

@@ -19,14 +19,14 @@ class TopupData extends React.Component {
     };
   
     componentDidMount() {
-      Axios.get(`http://localhost:8000/topup`).then((res) => {
+      Axios.get(`https://zwallet-api-wafa.herokuapp.com/topup`).then((res) => {
         console.log(res.data);
         const data = res.data.data;
         this.setState({ data });
       })
       Axios({
         method: 'post',
-        url: `http://localhost:8000/topup`,
+        url: `https://zwallet-api-wafa.herokuapp.com/topup`,
         data: {
           number: this.state.number,
           title: this.state.title,

@@ -21,7 +21,7 @@ const Receiver = (props) => {
     Axios(
       {
         method: "get",
-        url: `http://localhost:8000/${
+        url: `https://zwallet-api-wafa.herokuapp.com/${
           !props.key ? "users" : `transfer?search=${props.key}`
         }`,
       },

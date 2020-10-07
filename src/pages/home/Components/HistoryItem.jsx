@@ -5,7 +5,7 @@ export default function HistoryItems(props) {
   let [data, setData] = React.useState([])
 
   React.useEffect(()=>{
-    Axios.get(`http://localhost:8000/history`)
+    Axios.get(`https://zwallet-api-wafa.herokuapp.com/history`)
         .then((res)=>{
           console.log(res.data)
           let data = res.data.data
