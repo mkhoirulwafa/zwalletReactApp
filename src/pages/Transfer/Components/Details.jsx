@@ -1,22 +1,29 @@
 import React from 'react';
+import {DateTime} from 'luxon'
 
-export default function Detail(){
+export default function Detail(props){
+  const {
+    location: { input },
+  } = props;
+
+  const transferDate= DateTime.local().toFormat("DD - hh.mm")
+
     let details = [
       {
         title: "Amount",
-        value: "Rp100.000",
+        value: input.amount,
       },
       {
         title: "Balance Left",
-        value: "Rp20.000",
+        value: input.balance,
       },
       {
         title: "Date & Time",
-        value: "Time Stamp",
+        value: transferDate,
       },
       {
         title: "Notes",
-        value: "For buying some socks",
+        value: input.notes,
       },
     ];
     return details.map((item) => {

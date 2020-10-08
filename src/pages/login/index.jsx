@@ -84,7 +84,7 @@ class Login extends React.Component {
                   Forgot password?
                 </Link>
                 <div className="button btn second w-100">
-                  <Link to="/home">
+                  <Link to="/dashboard">
                     <button type="button" className="btn btn-lg btn-block">
                       <b>Login</b>
                     </button>

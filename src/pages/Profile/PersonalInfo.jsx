@@ -6,9 +6,10 @@ import Axios from 'axios';
 import Nav from "../../Components/Nav";
 import SideNav from "../../Components/SideNav";
 import Footer from "../../Components/Footer";
-import Detail from "./Components/Details";
+// import Detail from "./Components/Details";
 // import ButtonPinModal from "./Components/Modal";
-import "./src/css/transfer.css";
+import '../src/css/style.css'
+import '../Transfer/src/css/transfer.css'
 
 // Fetch from API PLEASEEE
 const Receiver = () => {
@@ -111,7 +112,6 @@ const TransferStatus = () => {
                     </div>
                   </div>
                 </div>
-                <Detail />
                 <div className="row main-title mt-3">
                   <h6>
                     <b>Transfer to</b>

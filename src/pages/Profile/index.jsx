@@ -9,6 +9,7 @@ import Footer from "../../Components/Footer";
 
 //styling
 import "../Topup/src/css/topup.css";
+import { useHistory } from 'react-router-dom';
 
 class ProfileData extends React.Component {
   state = {
@@ -66,6 +67,7 @@ class ProfileData extends React.Component {
 }
 
 export default function Profile() {
+  let history = useHistory()
   return (
     <>
       <Nav />
@@ -79,17 +81,17 @@ export default function Profile() {
                 <div class="row text-center mt-5">
                   <div class="col-sm-12 offset-md-2 col-md-8 text-center">
                     <div class="row mb-3">
-                      <button className="btn btn-lg btn-block second text-left p-3"><b>Personal Information</b></button>
+                      <button onClick={()=> history.push('/profile/personal')} className="btn btn-lg btn-block second text-left p-3"><b>Personal Information</b></button>
                     </div>
                     <div class="row mb-3">
-                      <button className="btn btn-lg btn-block second text-left p-3"><b>Change Password</b></button>
+                      <button onClick={()=> history.push('/profile/change-password')} className="btn btn-lg btn-block second text-left p-3"><b>Change Password</b></button>
                     </div>
                     <div class="row mb-3">
-                      <button className="btn btn-lg btn-block second text-left p-3"><b>Change PIN</b></button>
+                      <button onClick={()=> history.push('/profile/change-pin')} className="btn btn-lg btn-block second text-left p-3"><b>Change PIN</b></button>
                       <span></span>
                     </div>
                     <div class="row mb-3">
-                      <button className="btn btn-lg btn-block second text-left p-3"><b>Logout</b></button>
+                      <button onClick={()=> history.replace('/')} className="btn btn-lg btn-block second text-left p-3"><b>Logout</b></button>
                     </div>
                   </div>
                 </div>

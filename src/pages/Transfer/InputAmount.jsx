@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Axios from "axios";
 
 //components
@@ -10,63 +10,66 @@ import Footer from "../../Components/Footer";
 import "../src/css/style.css";
 import "./src/css/inputAmount.css";
 
-const Receiver = () => {
-  let receiver = [
-    {
-      img:
-        "https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/prof/2.png?raw=true",
-      name: "Samuel Suhi",
-      phone: "+62 813-8492-9994",
-    },
-  ];
-  return receiver.map((item) => {
-    return (
-      <div className="row">
-        <div className="col-sm-12 col-md-12 mb-3">
-          <div className="card border-0">
-            <a href="inputAmount.html">
-              <div className="container">
-                <div className="row">
-                  <div className="col-2 col-sm-2 col-md-2 col-lg-1">
-                    <img src={item.img} alt="" />
-                  </div>
-                  <div className="col-10 col-sm-10 col-md-10 col-lg-11 pl-5 pl-sm-5 pt-1">
-                    <p>
-                      <b>{item.name}</b>
-                    </p>
-                    <p className="small">{item.phone}</p>
-                  </div>
+const Receiver = (props) => {
+  return (
+    <div className="row">
+      <div className="col-sm-12 col-md-12 mb-3">
+        <div className="card border-0">
+            <div className="container">
+              <div className="row">
+                <div className="col-2 col-sm-2 col-md-2 col-lg-1">
+                  <img src={props.img} alt="" />
+                </div>
+                <div className="col-10 col-sm-10 col-md-10 col-lg-11 pl-5 pl-sm-5 pt-1">
+                  <p>
+                    <b>{props.name}</b>
+                  </p>
+                  <p className="small">{`+62 ${props.phone}`}</p>
                 </div>
               </div>
-            </a>
-          </div>
+            </div>
         </div>
       </div>
-    );
-  });
+    </div>
+  );
 };
 
-const InputAmount = () => {
+const Main = (props) => {
+  const [amount, setAmount] = React.useState("");
+  const [balance, setBalance] = React.useState(120000);
+  const [notes, setNotes] = React.useState("");
   const [data, setData] = React.useState([]);
 
-  React.useEffect(() => {
-    Axios.get(`https://zwallet-api-wafa.herokuapp.com/profile`, { params: { id: 7 } }).then(
-      (res) => {
-        // console.log(res.data);
-        const data = res.data.data;
-        setData(data);
-      }
-    ).catch((err)=>{setData(err.message)});
+  const {
+    location: { receiver },
+  } = props;
 
-    Axios({
-      method: 'post',
-      url: ``
+  React.useEffect(() => {
+    Axios.get(`https://zwallet-api-wafa.herokuapp.com/profile`, {
+      params: { id: 7 },
     })
+      .then((res) => {
+        // console.log(res.data);
+        const data = res.data.data[0];
+        setData(data);
+        setBalance(data.balance);
+      })
+      .catch((err) => {
+        setData(err.message);
+      });
   }, []);
+
+  //Validasi Number & Set to Amount
+  const handleChange = (e) => {
+    if (isNaN(parseInt(e.target.value))) {
+      e.target.value = "";
+    } else {
+      setAmount(e.target.value);
+    }
+  };
 
   return (
     <>
-      <Nav />
       <div className="container">
         <div className="row mr-5 ml-5">
           <SideNav />
@@ -79,7 +82,11 @@ const InputAmount = () => {
                   </h6>
                   <br />
                 </div>
-                <Receiver />
+                <Receiver
+                  img={receiver.avatar}
+                  name={receiver.name}
+                  phone={receiver.phone}
+                />
                 <div className="row mt-2 mb-2">
                   <div className="col-sm-12 col-md-6">
                     <p className="secondary">
@@ -92,7 +99,9 @@ const InputAmount = () => {
                   <div className="col-sm-12 col-md-12 mb-2">
                     <h1 className="text-center secondary">
                       <input
-                        onChange="mustNumber(this)" //MUST FIX THISSSSSSSSS
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
                         className="amount input-amount text-center border-none"
                         type="text"
                         placeholder="0.00"
@@ -101,17 +110,13 @@ const InputAmount = () => {
                     </h1>
                   </div>
                 </div>
-                {data.map((item) => {
-                  return (
-                    <div className="row">
-                      <div className="col-sm-12 col-md-12 mb-2">
-                        <p className="text-center">
-                          <b>Rp{item.balance} Available</b> {/*  BALANCE */}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
+                <div className="row">
+                  <div className="col-sm-12 col-md-12 mb-2">
+                    <p className="text-center">
+                      <b>Rp{balance - amount} Available</b> {/*  BALANCE */}
+                    </p>
+                  </div>
+                </div>
                 <div className="row justify-content-center mb-5">
                   <div className="col-sm-12 col-md-6 mb-2">
                     <div className="search input mt-3 bg-transparent">
@@ -120,6 +125,7 @@ const InputAmount = () => {
                         id="text"
                         type="text"
                         placeholder="Add some notes.."
+                        onChange={(e) => setNotes(e)}
                       />
                     </div>
                   </div>
@@ -130,7 +136,19 @@ const InputAmount = () => {
                       <div className="container mb-2 mt-n2 btn primary">
                         <Link to="/confirmation">
                           <button
-                            type="button"
+                            type="submit"
+                            onClick={() =>
+                              props.history.push({
+                                pathname: "/confirmation",
+                                receiver: {...receiver},
+                                input: {
+                                  amount: amount,
+                                  notes: notes,
+                                  balance: (balance-amount),
+                                  profileData: data,
+                                }
+                              })
+                            }
                             className="btn btn-lg text-white"
                           >
                             Continue
@@ -145,9 +163,20 @@ const InputAmount = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 };
+
+const InputAmount = (props) => {
+  let history = useHistory()
+  !props.location.receiver && history.replace("/transfer");
+  return (
+    <>
+      <Nav />
+      <Main {...props}/>
+      <Footer />
+    </>
+  );
+}
 
 export default InputAmount;

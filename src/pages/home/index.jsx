@@ -15,7 +15,7 @@ class Home extends React.Component {
       <>
         <Nav />
         <div className="container">
-          <div className="row mr-5 ml-5">
+          <div className="row mr-5 ml-5 min-vh-100">
             <SideNav />
             <Balance />
           </div>

@@ -1,11 +1,12 @@
 import React from "react";
+import Axios from "axios";
 import { Modal, Button } from "react-bootstrap";
-import {useHistory} from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 import InputPin from "../../../Components/pin";
 
 function MyVerticallyCenteredModal(props) {
-    let history = useHistory()
+  let history = useHistory();
   return (
     <Modal
       {...props}
@@ -28,7 +29,11 @@ function MyVerticallyCenteredModal(props) {
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={()=> history.replace('/transfer-status')} size="lg" className="btn btn-lg text-white">
+        <Button
+          onClick={() => history.replace("/transfer-status")}
+          size="lg"
+          className="btn btn-lg text-white"
+        >
           Continue
         </Button>
       </Modal.Footer>
@@ -36,23 +41,44 @@ function MyVerticallyCenteredModal(props) {
   );
 }
 
-function ButtonPinModal() {
+function ButtonPinModal(props) {
   const [modalShow, setModalShow] = React.useState(false);
+  // let history = useHistory();
+  const {
+    location: { input, receiver },
+  } = props;
+
+  const handleSubmit = () => {
+    Axios({
+      method: "post",
+      url: `https://zwallet-api-wafa.herokuapp.com/transfer/`,
+      data: {
+        amount: input.amount,
+        notes: input.notes,
+        receiver_name: receiver.fullName,
+        income: 1,
+        sender_name: "Robert Chandler"
+      },
+    })
+      .then((res) => {
+        setModalShow(false);
+      })
+      .catch((err) => console.log(err.message));
+  };
 
   return (
     <>
       <Button
         variant=""
-        onClick={() => setModalShow(true)}
+        onClick={() => handleSubmit}
         className="btn btn-lg text-white"
       >
         Continue
       </Button>
-
-      <MyVerticallyCenteredModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-      />
+        <MyVerticallyCenteredModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+        />
     </>
   );
 }

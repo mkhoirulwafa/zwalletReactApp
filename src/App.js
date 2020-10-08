@@ -14,7 +14,8 @@ import Confirmation from './pages/Transfer/Confirmation'
 import TransferStatus from './pages/Transfer/TransferStatus'
 import Topup from './pages/Topup'
 import Profile from './pages/Profile'
-// import { Login, Signup, TransferSearch, TransferAmount, TransferConfirmation } from "./page";
+import PersonalInfo from './pages/Profile/PersonalInfo'
+
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
         <Route path='/create-pin-success' component={PinSuccess}/>
         <Route path='/reset-password' component={ResetPassword}/>
         <Route path='/new-password' component={NewPassword}/>
-        <Route path='/home' component={Home}/>
+        <Route path='/dashboard' component={Home}/>
         <Route path='/history' component={History}/>
         <Route path='/transfer' component={Transfer}/>
         <Route path='/input-amount' component={InputAmount}/>
@@ -35,7 +36,7 @@ function App() {
         <Route path='/transfer-status' component={TransferStatus}/>
         <Route path='/topup' component={Topup}/>
         <Route path='/profile' component={Profile}/>
-        <Route path='/profile' component={Profile}/>
+        <Route path='/profile/personal' component={PersonalInfo}/>
       </Switch>
     </Router>
   );
