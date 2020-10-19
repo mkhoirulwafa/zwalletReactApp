@@ -33,14 +33,14 @@ const Receiver = (props) => {
 };
 
 const Content = (props) => {
-  const {
-    location: { receiver },
-  } = props;
-
   // const [transferDate, setTransferDate] = React.useState(
   //   Date.local().toFormat("DD - hh.mm")
   // );
 
+  const {
+    location: { receiver },
+  } = props;
+  
   return (
     <>
       <Nav />
@@ -58,7 +58,7 @@ const Content = (props) => {
                 </div>
                 <Receiver
                   img={receiver.avatar}
-                  name={receiver.fullName}
+                  name={receiver.name}
                   phone={receiver.phone}
                 />
                 <div class="row main-title mt-2 mb-2">

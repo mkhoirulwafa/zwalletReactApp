@@ -22,11 +22,11 @@ function Input(props) {
   } else {
     return (
       <>
-        <span className={props.classIcon}></span>
+        <span className='mail'></span>
         <input
-          id={props.classInput}
-          type={props.classInput}
-          placeholder={props.placeholder}
+          id='email'
+          type='email'
+          placeholder='Enter your email here'
           autoComplete= 'off'
           required
         />

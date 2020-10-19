@@ -19,10 +19,8 @@ const Receiver = (props) => {
     Axios(
       {
         method: "get",
-        url: `https://zwallet-api-wafa.herokuapp.com/${
-          !key ? "users" : `transfer?search=${key}`
-        }`,
-      },
+        url: `http://localhost:8000/api/v1/transfer/search/${key}`
+        }
       [key]
     )
       .then((res) => {
@@ -34,7 +32,8 @@ const Receiver = (props) => {
       });
   }, [key]);
 
-  let imgDefault = "https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/prof/blank.png?raw=true"
+  let imgDefault =
+    "https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/prof/blank.png?raw=true";
   return (
     <>
       <div className="row main-title mt-3">
@@ -50,51 +49,57 @@ const Receiver = (props) => {
           onChange={(e) => setKey(e.target.value)}
           type="text"
           placeholder="Search receiver here"
+          autoComplete="off"
         />
       </div>
-      {!receivers
-        ? "Loading..."
-        : receivers.map((item) => {
-            return (
-              !item ? <div className="container card text-center"><h4>Receiver doesn't exist</h4></div> :
-              <>
-                <div
-                  onClick={() =>
-                    props.history.push({
-                      pathname: "/input-amount",
-                      receiver: {
-                        name: item.fullName,
-                        phone: item.phone,
-                        avatar: item.avatar,
-                      },
-                    })
-                  }
-                  className="row"
-                >
-                  <div className="col-sm-12 col-md-12 mb-3">
-                    <div className="card border-0">
-                      <Link to="/input-amount">
-                        <div className="container">
-                          <div className="row">
-                            <div className="col-2 col-sm-2 col-md-2 col-lg-1">
-                              <img src={!item.avatar ? imgDefault : item.avatar} alt="" />
-                            </div>
-                            <div className="col-10 col-sm-10 col-md-10 col-lg-11 pl-5 pl-sm-5 pt-1">
-                              <p>
-                                <b>{item.fullName}</b>
-                              </p>
-                              <p className="small">+62 {item.phone}</p>
-                            </div>
+      {!receivers ? (
+        <div className="container">
+          <h4 className="text-warning">Receiver doesn't exists</h4>
+        </div>
+      ) : (
+        receivers.map((item) => {
+          return (
+            <>
+              <div
+                onClick={() =>
+                  props.history.push({
+                    pathname: "/input-amount",
+                    receiver: {
+                      name: item.firstName + item.lastName,
+                      phone: item.phone,
+                      avatar: item.avatar,
+                    },
+                  })
+                }
+                className="row"
+              >
+                <div className="col-sm-12 col-md-12 mb-3">
+                  <div className="card border-0">
+                    <Link to="/input-amount">
+                      <div className="container">
+                        <div className="row">
+                          <div className="col-2 col-sm-2 col-md-2 col-lg-1">
+                            <img
+                              src={!item.avatar ? imgDefault : item.avatar}
+                              alt=""
+                            />
+                          </div>
+                          <div className="col-10 col-sm-10 col-md-10 col-lg-11 pl-5 pl-sm-5 pt-1">
+                            <p>
+                              <b>{item.fullName}</b>
+                            </p>
+                            <p className="small">+62 {item.phone}</p>
                           </div>
                         </div>
-                      </Link>
-                    </div>
+                      </div>
+                    </Link>
                   </div>
                 </div>
-              </>
-            );
-          })}
-      ;
+              </div>
+            </>
+          );
+        })
+      )}
     </>
   );
 };

@@ -45,7 +45,7 @@ const Main = (props) => {
   } = props;
 
   React.useEffect(() => {
-    Axios.get(`https://zwallet-api-wafa.herokuapp.com/profile`, {
+    Axios.get(`http://localhost:8000/api/v1/users`, {
       params: { id: 7 },
     })
       .then((res) => {
@@ -67,7 +67,6 @@ const Main = (props) => {
       setAmount(e.target.value);
     }
   };
-
   return (
     <>
       <div className="container">

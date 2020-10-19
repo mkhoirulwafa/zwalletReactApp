@@ -7,7 +7,7 @@ export default class TopupData extends React.Component {
     };
   
     componentDidMount() {
-      Axios.get(`https://zwallet-api-wafa.herokuapp.com/topup`).then((res) => {
+      Axios.get(`http://localhost:8000/api/v1/topup`).then((res) => {
         console.log(res.data);
         const data = res.data.data;
         this.setState({ data });

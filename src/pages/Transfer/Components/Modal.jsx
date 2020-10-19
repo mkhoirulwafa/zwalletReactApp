@@ -51,7 +51,7 @@ function ButtonPinModal(props) {
   const handleSubmit = () => {
     Axios({
       method: "post",
-      url: `https://zwallet-api-wafa.herokuapp.com/transfer/`,
+      url: `http://localhost:8000/api/v1/transfer/`,
       data: {
         amount: input.amount,
         notes: input.notes,

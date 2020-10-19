@@ -1,12 +1,14 @@
 import React from "react";
 import Axios from "axios";
 import { TextBlock } from "react-placeholder";
+import {Nav} from 'react-bootstrap'
 
-export default function Nav() {
+
+export default function Navbar() {
   const [data, setData] = React.useState([]);
 
   React.useEffect(() => {
-    Axios.get(`https://zwallet-api-wafa.herokuapp.com/profile`, {
+    Axios.get(`http://localhost:8000/api/v1/users`, {
       params: { id: 7 },
     }).then((res) => {
       const data = res.data.data[0];
@@ -17,7 +19,7 @@ export default function Nav() {
   let imgDefault = "https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/prof/blank.png?raw=true"
 
   return (
-    <nav className="navbar navbar-expand-lg bg-light my-navbar">
+    <Nav className="navbar navbar-expand-lg bg-light my-navbar">
       <div className="container">
         <a className="navbar-brand active pl-3 ml-5" href="#a">
           <b>Zwallet</b>
@@ -52,7 +54,7 @@ export default function Nav() {
                       <p>
                         <b>
                           {data ? (
-                            data.fullName
+                            `${data.firstName} ${data.lastName}`
                           ) : (
                             <TextBlock
                               rows={1}
@@ -98,6 +100,6 @@ export default function Nav() {
           </div>
         </div>
       </div>
-    </nav>
+    </Nav>
   );
 }

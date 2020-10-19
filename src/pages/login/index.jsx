@@ -1,110 +1,94 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Col, Container, Row } from "react-bootstrap";
+// import Axios from "axios";
 
 //style
 import "../src/css/style.css";
 import "./src/css/login.css";
 //components
-import Input from "../../Components/input";
+// import Input from "../../Components/input";
 import Descript from "./src/components/Description";
+import LeftSide from "../../Components/LeftSide";
+import { login } from "./../../Utils/index";
 
-class Login extends React.Component {
-  render() {
-    return (
-      <div className="row">
-        <div className="container bg col-sm-12 col-md-7 col-lg-7">
-          <div className="row ml-3 ml-sm-3 ml-md-2">
-            <div className="offset-md-2 col-md-9">
-              <h3 className="text-white">
-                <b>Zwallet</b>
+const Login = (props) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  return (
+    <Row className="row">
+      <LeftSide />
+      <div className="col-md-5 align-items-center h-100">
+        <Container>
+          <div className="row">
+            <Col className="col-md-9 padding-top">
+              <h3>
+                Start Accessing Banking Needs With All Devices and All Platforms
+                With 30.000+ Users
               </h3>
-            </div>
-          </div>
-          <div className="row ml-3 ml-sm-3 ml-md-2">
-            <div className="col-md text-center">
-              <img
-                src="https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/hp-home.png?raw=true"
-                className="mx-auto d-block img-fluid"
-                alt=""
-              />
-            </div>
-          </div>
-          <div className="row ml-3 ml-sm-3 ml-md-2">
-            <div className="offset-md-2 col-md-10 col-sm-12">
-              <h3 className="text-white">App that Covering Banking Needs.</h3>
-            </div>
-          </div>
-          <div className="row ml-3 ml-sm-3 ml-md-2">
-            <div className="col-sm-12 offset-md-2 col-md-8 col-xs mb-5">
+            </Col>
+            <div className="col-md-9">
               <Descript
-                class="description light"
-                content="Zwallet is an application that focussing in banking needs for
-                all users in the world. Always updated and always following
-                world trends. 5000+ users registered in Zwallet everyday with
-                worldwide users coverage."
-              />
-            </div>
-          </div>
-        </div>
-        <div className="col-md-5 align-items-center h-100">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-9 padding-top">
-                <h3>
-                  Start Accessing Banking Needs With All Devices and All
-                  Platforms With 30.000+ Users
-                </h3>
-              </div>
-              <div className="col-md-9">
-                <Descript
-                  id="dark"
-                  class="description"
-                  content="Transfering money is eassier than ever, you can access Zwallet
+                id="dark"
+                class="description"
+                content="Transfering money is eassier than ever, you can access Zwallet
                   wherever you are. Desktop, laptop, mobile phone? we cover all
                   of that for you!"
-                />
-              </div>
-              <div className="col-md-9">
+              />
+            </div>
+            <div className="col-md-9">
+              <form onSubmit={() => login(email, password)}>
                 <div className="email input">
-                  <Input
-                    classIcon="mail"
-                    classInput="email"
+                  <span className="mail"></span>
+                  <input
+                    id="email"
+                    type="email"
                     placeholder="Enter your email"
+                    onChange={(e)=> setEmail(e.target.value)}
+                    autoComplete="off"
+                    required
                   />
                 </div>
                 <div className="password input">
-                  <Input
-                    classIcon="lock"
-                    classInput="password"
-                    placeholder="Enter your password"
-                    visibility="eye"
+                  <span className='lock'></span>
+                  <input
+                    id='password'
+                    type='password'
+                    placeholder='Enter your password'
+                    autoComplete="off"
+                    required
+                    onChange={(e)=> setPassword(e.target.value)}
+                  />
+                  <img
+                    className= 'eye'
+                    src="https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/eye-crossed.png?raw=true"
+                    alt=""
                   />
                 </div>
                 <Link to="/reset-password" className="forgot mb-5">
                   Forgot password?
                 </Link>
                 <div className="button btn second w-100">
-                  <Link to="/dashboard">
-                    <button type="button" className="btn btn-lg btn-block">
-                      <b>Login</b>
-                    </button>
+                  <button type="submit" className="btn btn-lg btn-block">
+                    <b>Login</b>
+                  </button>
+                </div>
+              </form>
+              <div className="sign-up text-center mt-3">
+                <p className="text">
+                  Don’t have an account? Let’s{" "}
+                  <Link to="/signup" className="a bold primary">
+                    Sign Up
                   </Link>
-                </div>
-                <div className="sign-up text-center mt-3">
-                  <p className="text">
-                    Don’t have an account? Let’s{" "}
-                    <Link to="/signup" className="a bold primary">
-                      Sign Up
-                    </Link>
-                  </p>
-                </div>
+                </p>
               </div>
             </div>
           </div>
-        </div>
+        </Container>
       </div>
-    );
-  }
-}
+    </Row>
+  );
+};
 
 export default Login;

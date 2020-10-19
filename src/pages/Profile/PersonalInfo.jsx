@@ -17,7 +17,7 @@ const Receiver = () => {
     const [profile, setProfile] = React.useState([])
 
     React.useEffect(()=>{
-        Axios.get(`https://zwallet-api-wafa.herokuapp.com/profile`, { params: { id: 7 } }).then(
+        Axios.get(`http://localhost:8000/api/v1/users`, { params: { id: 7 } }).then(
       (res) => {
         console.log(res.data);
         const data = res.data.data;

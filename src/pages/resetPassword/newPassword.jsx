@@ -19,7 +19,7 @@ const Login = () => {
     if (newPassword === newPassword2) {
       Axios({
         method: "patch",
-        url: `https://zwallet-api-wafa.herokuapp.com/users`,
+        url: `http://localhost:8000/api/v1/users`,
         data: { password: newPassword2 },
       })
         .then((res) => {
@@ -73,7 +73,7 @@ const Login = () => {
                 />
               </div>
               <div className="button btn second w-100 mt-5">
-                <Link to="/home">
+                <Link to="/dashboard">
                   <button
                     onClick={() => handleSubmit}
                     type="button"
