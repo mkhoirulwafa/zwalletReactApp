@@ -52,10 +52,9 @@ const Receiver = (props) => {
           autoComplete="off"
         />
       </div>
-      {!receivers ? (
-        <div className="container">
-          <h4 className="text-warning">Receiver doesn't exists</h4>
-        </div>
+      {(receivers.length < 1) ? (<div className="loading">
+        Loading...
+      </div>
       ) : (
         receivers.map((item) => {
           return (
@@ -65,7 +64,7 @@ const Receiver = (props) => {
                   props.history.push({
                     pathname: "/input-amount",
                     receiver: {
-                      name: item.firstName + item.lastName,
+                      name: item.fullName,
                       phone: item.phone,
                       avatar: item.avatar,
                     },

@@ -1,27 +1,31 @@
 import React from 'react';
 import './App.css';
-import Login from './pages/login'
-import Signup from './pages/signup'
-import CreatePin from './pages/createPin'
-import PinSuccess from './pages/createPin/pinSuccess'
-import ResetPassword from './pages/resetPassword'
-import NewPassword from './pages/resetPassword/newPassword'
-import Home from './pages/home'
-import HomeAdmin from './pages/homeAdmin'
-import History from './pages/History'
-import Transfer from './pages/Transfer'
-import InputAmount from './pages/Transfer/InputAmount'
-import Confirmation from './pages/Transfer/Confirmation'
-import TransferStatus from './pages/Transfer/TransferStatus'
-import Topup from './pages/Topup'
-import Profile from './pages/Profile'
-import PersonalInfo from './pages/Profile/PersonalInfo'
-
-import {BrowserRouter as Router, Switch} from 'react-router-dom'
+import Login from './pages/login';
+import Signup from './pages/signup';
+import CreatePin from './pages/createPin';
+import PinSuccess from './pages/createPin/pinSuccess';
+import ResetPassword from './pages/resetPassword';
+import NewPassword from './pages/resetPassword/newPassword';
+import Home from './pages/home';
+import HomeAdmin from './pages/homeAdmin';
+import History from './pages/History';
+import Transfer from './pages/Transfer';
+import InputAmount from './pages/Transfer/InputAmount';
+import Confirmation from './pages/Transfer/Confirmation';
+import TransferStatus from './pages/Transfer/TransferStatus';
+import Topup from './pages/Topup';
+import Profile from './pages/Profile';
+import PersonalInfo from './pages/Profile/PersonalInfo';
+//Redux Configure Import
+import configureStore from './redux/store';
+import {PersistGate} from "redux-persist/integration/react";
+import {Provider} from 'react-redux'
+//Routing
+import {BrowserRouter as Router, Switch} from 'react-router-dom';
 import PublicRoute from './Components/PublicRoute';
 import PrivateRoute from './Components/PrivateRoute';
 
-function App(props) {
+const Routes=(props)=>{
   return (
     <Router>
       <Switch>
@@ -44,6 +48,18 @@ function App(props) {
       </Switch>
     </Router>
   );
+}
+
+
+const App = ()=>{
+  const {store, persistor} = configureStore()
+  return(
+    <Provider store={store} >
+      <PersistGate loading={null} persistor={persistor}>
+        <Routes />
+      </PersistGate>
+    </Provider>
+  )
 }
 
 export default App;

@@ -24,15 +24,15 @@ class TopupData extends React.Component {
         const data = res.data.data;
         this.setState({ data });
       })
-      Axios({
-        method: 'post',
-        url: `http://localhost:8000/api/v1/topup`,
-        data: {
-          number: this.state.number,
-          title: this.state.title,
-          description: this.state.description
-        }
-      })
+      // Axios({
+      //   method: 'post',
+      //   url: `http://localhost:8000/api/v1/topup`,
+      //   data: {
+      //     number: this.state.number,
+      //     title: this.state.title,
+      //     description: this.state.description
+      //   }
+      // })
     }
   
     render() {
@@ -62,9 +62,9 @@ export default function Topup() {
     <>
       <Nav />
       <div className="container">
-        <div className="row mr-5 ml-5">
+        <div className="row">
           <SideNav />
-          <div className="col-xs-11 col-sm-9 col-md-9">
+          <div className="col">
             <div className="container card min-vh-100">
               <div className="container">
                 <div className="row main-title mt-3">

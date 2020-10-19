@@ -1,20 +1,34 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AuthLogin } from "../../redux/actions/Auth";
 import { Link } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
-// import Axios from "axios";
 
 //style
 import "../src/css/style.css";
 import "./src/css/login.css";
 //components
-// import Input from "../../Components/input";
 import Descript from "./src/components/Description";
 import LeftSide from "../../Components/LeftSide";
-import { login } from "./../../Utils/index";
+// import { login } from "./../../Utils/index";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+
+  const { loading } = useSelector((s) => s.Auth);
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(
+      AuthLogin({
+        email: email,
+        password: password,
+        history: props.history,
+      })
+    );
+  };
 
   return (
     <Row className="row">
@@ -38,30 +52,30 @@ const Login = (props) => {
               />
             </div>
             <div className="col-md-9">
-              <form onSubmit={() => login(email, password)}>
+              <form onSubmit={(e) => onSubmit(e)}>
                 <div className="email input">
                   <span className="mail"></span>
                   <input
                     id="email"
                     type="email"
                     placeholder="Enter your email"
-                    onChange={(e)=> setEmail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                     autoComplete="off"
                     required
                   />
                 </div>
                 <div className="password input">
-                  <span className='lock'></span>
+                  <span className="lock"></span>
                   <input
-                    id='password'
-                    type='password'
-                    placeholder='Enter your password'
+                    id="password"
+                    type="password"
+                    placeholder="Enter your password"
                     autoComplete="off"
                     required
-                    onChange={(e)=> setPassword(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                   <img
-                    className= 'eye'
+                    className="eye"
                     src="https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/eye-crossed.png?raw=true"
                     alt=""
                   />
@@ -70,9 +84,19 @@ const Login = (props) => {
                   Forgot password?
                 </Link>
                 <div className="button btn second w-100">
-                  <button type="submit" className="btn btn-lg btn-block">
-                    <b>Login</b>
-                  </button>
+                  {loading ? (
+                    <button
+                      type="submit"
+                      disabled={true}
+                      className="btn btn-lg btn-block"
+                    >
+                      <b>Loading...</b>
+                    </button>
+                  ) : (
+                    <button type="submit" className="btn btn-lg btn-block">
+                      <b>Login</b>
+                    </button>
+                  )}
                 </div>
               </form>
               <div className="sign-up text-center mt-3">
