@@ -1,38 +1,37 @@
 import React from "react";
-import Axios from "axios";
-import { TextBlock } from "react-placeholder";
+// import Axios from "axios";
+import { TextBlock } from "react-placeholder/lib/placeholders";
+import "react-placeholder/lib/reactPlaceholder.css";
 import { Nav } from "react-bootstrap";
 // import Li from "./SidenavContent";
-// import { Link, useLocation, useHistory } from "react-router-dom";
-// import { useDispatch } from 'react-redux';
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getUsers } from "./../redux/actions/Users";
 
 export default function Navbar(props) {
-  const [data, setData] = React.useState([]);
+  // const [data, setData] = React.useState([]);
+  const dispatch = useDispatch();
+  const { data, loading } = useSelector((s) => s.Users);
+  const Auth = useSelector((s) => s.Auth);
+
+  // console.log(`${Auth.data},  HALOOOO`);
 
   React.useEffect(() => {
-    Axios.get(`http://localhost:8000/api/v1/users`, {
-      params: { id: 7 },
-    }).then((res) => {
-      const data = res.data.data[0];
-      setData(data);
-    });
-  }, []);
-
-  let imgDefault =
-    "https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/prof/blank.png?raw=true";
-  // let location = useLocation();
-  // let history = useHistory();
-  // const dispatch = useDispatch()
-  // const onLogout = () => {
-  //   dispatch(AuthLogout())
-  //   history.replace("/");
-  // };
+    dispatch(
+      getUsers({
+        id: Auth.data.id,
+        token: Auth.data.token,
+      })
+    );
+  }, [dispatch, Auth.data.id, Auth.data.token]);
 
   return (
     <Nav className="navbar navbar-expand-lg bg-light my-navbar">
       <div className="container">
         <a className="navbar-brand active pl-3 ml-5" href="/">
-          <b>Zwallet</b>
+          <h4>
+            <b>Zwallet</b>
+          </h4>
         </a>
         <button
           className="navbar-toggler"
@@ -52,45 +51,57 @@ export default function Navbar(props) {
                 <div className="col-3 col-sm-3 col-md-3">
                   <div className="container">
                     <img
-                      src={data.avatar !== null ? data.avatar : imgDefault}
-                      className="avatar"
+                      src={
+                        data.avatar === ""
+                          ? "https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/prof/blank.png?raw=true"
+                          : data.avatar
+                      }
+                      className="avatar rounded"
                       alt=""
                     />
                   </div>
                 </div>
                 <div className="col-7 col-sm-3 col-md-6 mr-n2">
                   <div className="row">
-                    <div className="col-sm-12 col-md-10 mt-2">
-                      <p>
+                    <div className="col mt-2">
+                      <p className="text">
                         <b>
-                          {!data ? (
+                          {loading ? (
                             <TextBlock
+                              delay
+                              showLoadingAnimation
                               rows={1}
                               style={{
                                 width: 170,
-                                marginBottom: 10,
+                                marginBottom: 7,
                                 height: 25,
                               }}
                               color="#f0f0f0"
                             />
                           ) : (
-                            `${data.firstName} ${data.lastName}`
+                            data.firstName + " " + data.lastName
                           )}
                         </b>
                       </p>
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-sm-12 col-md-12">
+                    <div className="col">
                       <span>
-                        {!data ? (
+                        {loading ? (
                           <TextBlock
+                            delay
+                            showLoadingAnimation
                             rows={1}
                             style={{ width: 150 }}
                             color="#f0f0f0"
                           />
+                        ) : data.phone === "" ? (
+                          <Link to="add-phone" className="text-primary">
+                            Add your phone number
+                          </Link>
                         ) : (
-                          data.phone
+                          `+${data.phone}`
                         )}
                       </span>
                     </div>
@@ -102,7 +113,7 @@ export default function Navbar(props) {
                       src="https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/bell.png?raw=true"
                       className="icon notification"
                       alt=""
-                      width="25"
+                      width="10"
                     />
                   </div>
                 </div>

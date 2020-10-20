@@ -3,36 +3,36 @@ import Axios from "axios";
 
 const UsersRequest = () => {
   return {
-    type: "LOGIN_REQUEST",
+    type: "USERS_REQUEST",
   };
 };
 const UsersSuccess = (data) => {
   return {
-    type: "LOGIN_SUCCESS",
+    type: "USERS_SUCCESS",
     payload: data,
   };
 };
 const UsersError = (error) => {
   return {
-    type: "LOGIN_ERROR",
+    type: "USERS_ERROR",
     payload: error,
   };
 };
 
-export const Users = (fields) => {
+export const getUsers = (fields) => {
   return (dispatch) => {
     dispatch(UsersRequest());
     return Axios({
       method: "get",
-      url: `http://localhost:8000/api/v1/users`,
+      url: `http://localhost:8000/api/v1/users/${fields.id}`,
       headers: {
         "token": fields.token,
       },
     })
       .then((res) => {
-        const data = res.data.data;
-        console.log(data);
+        const data = res.data.data
         dispatch(UsersSuccess(data));
+        console.log(`${res.data.data} , ini di fetch USERS yaaaaaa butuh token:(`);
       })
       .catch((err) => {
         dispatch(UsersError(err.message));

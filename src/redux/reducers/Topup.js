@@ -3,18 +3,18 @@ const initialState = {
     loading: false,
   };
   
-  const Users = (state = initialState, action = {}) => {
+  const Topup = (state = initialState, action = {}) => {
     switch (action.type) {
-      case "USERS_REQUEST":
+      case "TOPUP_REQUEST":
         return { ...state, loading: true};
-      case "USERS_SUCCESS":
+      case "TOPUP_SUCCESS":
         return { ...state, loading: false, isLogin:true, data: action.payload };
-      case "USERS_ERROR":
+      case "TOPUP_ERROR":
         return { ...state, loading: false, isLogin:false, data: [], error: action.payload };  
       default:
         return state;
     }
   };
   
-  export default Users
+  export default Topup
   
