@@ -19,6 +19,7 @@ const UsersError = (error) => {
   };
 };
 
+//action Get User By ID
 export const getUsers = (fields) => {
   return (dispatch) => {
     dispatch(UsersRequest());
