@@ -12,7 +12,7 @@ const Auth = (state = initialState, action = {}) => {
     case "LOGIN_ERROR":
       return { ...state, loading: false, isLogin:false, data: [], error: action.payload };
     case "LOGOUT":
-      return { ...state, loading: false, isLogin:true, data:[], _persist: { rehydrate: true, version: -1} };
+      return { ...state, loading: false, isLogin:false, data:[], _persist: { rehydrate: true, version: -1} };
 
     default:
       return state;

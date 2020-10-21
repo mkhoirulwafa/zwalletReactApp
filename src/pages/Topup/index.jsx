@@ -48,8 +48,10 @@ const TopupData = (props) => {
                     showLoadingAnimation
                     rows={1}
                     style={{
-                      width: 370,
-                      height: 25,
+                      width: 700,
+                      height: 60,
+                      marginLeft: 15,
+                      marginTop: 15
                     }}
                     color="#f0f0f0"
                   />

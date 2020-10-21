@@ -52,7 +52,7 @@ export default function Li (props) {
         <li
           key={item.id}
           className={
-            path === `/${item.title.toLowerCase()}`
+            path.includes(`/${item.title.toLowerCase()}`)
               ? "list-group-item border-0 mb-4 active-bar rounded"
               : "list-group-item border-0 mb-4 rounded align-end"
           }
@@ -61,7 +61,7 @@ export default function Li (props) {
             <div className="col-sm-2 col-md-2">
               <img
                 src={
-                  path === `/${item.title.toLowerCase()}`
+                    path.includes(`/${item.title.toLowerCase()}`)
                     ? item.imgActive
                     : item.imgInactive
                 }

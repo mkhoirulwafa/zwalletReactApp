@@ -13,8 +13,7 @@ import "../Topup/src/css/topup.css";
 // import { TextBlock } from "react-placeholder/lib/placeholders";
 import "react-placeholder/lib/reactPlaceholder.css";
 import Descript from "../login/src/components/Description";
-import { updateUsers } from "./../../redux/actions/Users";
-import { useHistory } from "react-router-dom";
+import {updateUsers} from '../../redux/actions/Users';
 
 const Input = (props) => {
   return (
@@ -37,35 +36,18 @@ const Input = (props) => {
   );
 };
 
-export default function PersonalInfo(props) {
-  const history = useHistory();
+export default function ChangePassword(props) {
+  // console.log(props, 'change Password')
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPassword2, setNewPassword2] = useState("");
-  const [reset, setReset] = useState(true);
-
   const dispatch = useDispatch();
-
   const Auth = useSelector((s) => s.Auth);
-  // const Users = useSelector((s) => s.Users);
-
-  // useEffect(()=>{
-  //   dispatch(
-  //     UpdateUser({
-  //       token: Auth.data.token,
-  //       id: Auth.data.id,
-  //       data: {
-  //         password: newPassword,
-  //       },
-  //       history: history,
-  //     })
-  //   )
-  // }, [reset, history, Auth.data.token, Auth.data.id, dispatch, newPassword])
-
+  
+  
   const onSubmit = (e) => {
-    // e.preventDefault()
+    e.preventDefault()
     if (newPassword2 === newPassword) {
-      reset ? setReset(false) : setReset(true);
       dispatch(
         updateUsers({
           token: Auth.data.token,
@@ -73,14 +55,14 @@ export default function PersonalInfo(props) {
           data: {
             password: newPassword2,
           },
-          history: history,
+          history: props.history,
         })
       );
     } else {
       alert("Repeat your new Password Correctly!");
     }
   };
-
+  
   return (
     <>
       <Nav />

@@ -48,7 +48,7 @@ const Login = () => {
             <div className="col-md-9">
               <Descript
                 id="dark"
-                class="description"
+                className="description"
                 content="To reset your password, you must type your e-mail and we will send a 
                   link to your email and you will be directed to the reset password screens."
               />

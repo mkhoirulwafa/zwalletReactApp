@@ -61,7 +61,7 @@ const Content = (props) => {
                   name={receiver.name}
                   phone={receiver.phone}
                 />
-                <div class="row main-title mt-2 mb-2">
+                <div className="row main-title mt-2 mb-2">
                   <h6>
                     <b>Detail</b>
                   </h6>

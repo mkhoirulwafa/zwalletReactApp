@@ -45,7 +45,7 @@ const Login = (props) => {
             <div className="col-md-9">
               <Descript
                 id="dark"
-                class="description"
+                className="description"
                 content="Transfering money is eassier than ever, you can access Zwallet
                   wherever you are. Desktop, laptop, mobile phone? we cover all
                   of that for you!"

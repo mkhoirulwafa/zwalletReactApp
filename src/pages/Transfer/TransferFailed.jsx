@@ -74,21 +74,21 @@ const TransferFailed = () => {
           <div className="col-xs-11 col-sm-9 col-md-9">
             <div className="container card min-vh-100">
               <div className="container">
-                <div class="row">
-                  <div class="col-sm-12 col-md-12">
-                    <div class="row mb-3">
-                      <div class="m-auto">
+                <div className="row">
+                  <div className="col-sm-12 col-md-12">
+                    <div className="row mb-3">
+                      <div className="m-auto">
                         <img
                           src="https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/failed.png?raw=true"
                           alt=""
-                          class="m-auto"
+                          className="m-auto"
                         />
                         <br />
                       </div>
                     </div>
-                    <div class="row mb-5">
-                      <div class="m-auto mt-3">
-                        <h6 class="m-auto">
+                    <div className="row mb-5">
+                      <div className="m-auto mt-3">
+                        <h6 className="m-auto">
                           <b>Transfer Failed</b>
                         </h6>
                       </div>

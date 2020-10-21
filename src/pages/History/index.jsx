@@ -18,17 +18,17 @@ class History extends React.Component {
         <div className="container">
           <div className="row mr-5 ml-5">
             <SideNav />
-            <div class="col-12 col-sm-10 col-md-8 col-lg-9 min-vh-100">
-                <div class="container card min-vh-100">
-                    <div class="container">
-                        <div class="row main-title mt-3">
+            <div className="col-12 col-sm-10 col-md-8 col-lg-9 min-vh-100">
+                <div className="container card min-vh-100">
+                    <div className="container">
+                        <div className="row main-title mt-3">
                             <h6><b>Transaction History</b></h6> <br/>
                         </div>
-                        <div class="row secondary">
+                        <div className="row secondary">
                             <h6>This Week</h6>
                         </div>
                         <HistoryItems start='0' end='2'/>
-                        <div class="row secondary">
+                        <div className="row secondary">
                             <h6>This Month</h6>
                         </div>
                         <HistoryItems start='2' end='4'/>

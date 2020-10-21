@@ -49,24 +49,24 @@ const Receiver = () => {
 const Button = () => {
   return (
     <>
-      <div class="row mt-5 mb-3 d-flex justify-content-sm-center justify-content-md-center justify-content-lg-end">
-        <div class="col-sm-12 col-md-12 col-lg-12">
-          <div class="button text-sm-center text-center text-md-right text-lg-right">
-            <button class="col-3 col-sm-3 col-md-4 col-lg-2 small-btn-light-primary mr-2">
+      <div className="row mt-5 mb-3 d-flex justify-content-sm-center justify-content-md-center justify-content-lg-end">
+        <div className="col-sm-12 col-md-12 col-lg-12">
+          <div className="button text-sm-center text-center text-md-right text-lg-right">
+            <button className="col-3 col-sm-3 col-md-4 col-lg-2 small-btn-light-primary mr-2">
               <img
                 src="https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/share-2.png?raw=true"
                 alt=""
               />
             </button>
-            <button class="col-9 col-sm-9 col-md-4 col-lg-5 big-btn-light-primary active mr-2">
+            <button className="col-9 col-sm-9 col-md-4 col-lg-5 big-btn-light-primary active mr-2">
               <img
                 src="https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/download.png?raw=true"
                 alt=""
               />
               Download PDF
             </button>
-            <button class="col-12 col-sm-12 col-md-4 col-lg-5 text bold text-center text-sm-center med-btn-primary">
-              <a href="home.html" class="text-white">
+            <button className="col-12 col-sm-12 col-md-4 col-lg-5 text bold text-center text-sm-center med-btn-primary">
+              <a href="home.html" className="text-white">
                 Back To Home
               </a>
             </button>
@@ -87,21 +87,21 @@ const TransferStatus = () => {
           <div className="col-xs-11 col-sm-9 col-md-9">
             <div className="container card min-vh-100">
               <div className="container">
-                <div class="row">
-                  <div class="col-sm-12 col-md-12">
-                    <div class="row mb-3">
-                      <div class="m-auto">
+                <div className="row">
+                  <div className="col-sm-12 col-md-12">
+                    <div className="row mb-3">
+                      <div className="m-auto">
                         <img
                           src="https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/success.png?raw=true"
                           alt=""
-                          class="m-auto"
+                          className="m-auto"
                         />
                         <br />
                       </div>
                     </div>
-                    <div class="row mb-5">
-                      <div class="m-auto mt-3">
-                        <h6 class="m-auto">
+                    <div className="row mb-5">
+                      <div className="m-auto mt-3">
+                        <h6 className="m-auto">
                           <b>Transfer Success</b>
                         </h6>
                       </div>

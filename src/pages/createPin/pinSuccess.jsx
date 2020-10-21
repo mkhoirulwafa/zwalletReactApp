@@ -36,7 +36,7 @@ class PinSuccess extends React.Component {
           <div className="row ml-3 ml-sm-3 ml-md-2">
             <div className="col-sm-12 offset-md-2 col-md-8 col-xs mb-5">
               <Descript
-                class="description light"
+                className="description light"
                 content="Zwallet is an application that focussing in banking needs for
                 all users in the world. Always updated and always following
                 world trends. 5000+ users registered in Zwallet everyday with
@@ -48,7 +48,7 @@ class PinSuccess extends React.Component {
         <div className="col-md-5 align-items-center h-100">
           <div className="container">
             <div className="row">
-              <div class="text-sm-center col-sm-12 col-md-4 padding-top">
+              <div className="text-sm-center col-sm-12 col-md-4 padding-top">
                 <img src="https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/success.png?raw=true" alt="" />
               </div>
               <div className="col-md-9">
@@ -57,7 +57,7 @@ class PinSuccess extends React.Component {
               <div className="col-md-9">
                 <Descript
                   id="dark"
-                  class="description"
+                  className="description"
                   content="Your PIN was successfully created and you can now access all the features in Zwallet. 
                   Login to your new account and start exploring!"
                 />

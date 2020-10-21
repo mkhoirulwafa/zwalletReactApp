@@ -25,7 +25,7 @@ const Balance = () => {
   }, [dispatch, Auth.data.id, Auth.data.token]);
 
   return (
-    <div className="col-12 col-sm-10 col-md-8 col-lg-9">
+    <div className="col col-sm col-md col-lg">
       <div className="container">
         <div className="row balance d-flex justify-content-between  h-100">
           <div className="col-6 col-sm-6 col-md-7 col-lg-9 mb-3 mt-3">

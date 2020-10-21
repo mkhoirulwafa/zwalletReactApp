@@ -15,6 +15,7 @@ import Confirmation from './pages/Transfer/Confirmation';
 import TransferStatus from './pages/Transfer/TransferStatus';
 import Topup from './pages/Topup';
 import Profile from './pages/Profile';
+import ChangePassword from './pages/Profile/ChangePassword';
 import PersonalInfo from './pages/Profile/PersonalInfo';
 //Redux Configure Import
 import configureStore from './redux/store';
@@ -31,20 +32,21 @@ const Routes=(props)=>{
       <Switch>
         <PublicRoute component={Login} restricted={true} path='/' exact />
         <PublicRoute component={Signup} restricted={true} path='/signup' exact />
-        <PrivateRoute component={CreatePin} path='/create-pin' />
-        <PrivateRoute component={PinSuccess} path='/create-pin-success' />
-        <PublicRoute component={ResetPassword} restricted={false} path='/reset-password' exact />
+        <PublicRoute component={CreatePin} restricted={true} path='/create-pin' />
+        <PublicRoute component={PinSuccess} restricted={true} path='/create-pin-success' />
+        <PublicRoute component={ResetPassword} restricted={true} path='/reset-password' exact />
         <PublicRoute component={NewPassword} restricted={false} path='/new-password' exact />
         <PrivateRoute component={Home} path='/dashboard' />
         <PrivateRoute component={HomeAdmin} path='/admin' />
         <PrivateRoute component={History} path='/history' />
-        <PrivateRoute component={Transfer} path='/transfer' />
+        <PrivateRoute component={Transfer} path='/transfer' exact />
         <PrivateRoute component={InputAmount} path='/transfer/input-amount' />
         <PrivateRoute component={Confirmation} path='/transfer/confirmation' />
         <PrivateRoute component={TransferStatus} path='/transfer/success' />
         <PrivateRoute component={Topup} path='/topup' />
-        <PrivateRoute component={Profile} path='/profile' />
+        <PrivateRoute component={Profile} path='/profile' exact/>
         <PrivateRoute component={PersonalInfo} path='/profile/personal' />
+        <PrivateRoute component={ChangePassword} path='/profile/change-password' />
       </Switch>
     </Router>
   );

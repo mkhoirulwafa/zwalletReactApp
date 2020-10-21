@@ -30,7 +30,7 @@ const LeftSide = () => {
         <Row className="ml-3 ml-sm-3 ml-md-2">
           <Col xs sm md={{ span: 9, offset: 2 }} className="mb-5">
             <Descript
-              class="description light"
+              className="description light text-white-50"
               content="Zwallet is an application that focussing in banking needs for
                 all users in the world. Always updated and always following
                 world trends. 5000+ users registered in Zwallet everyday with

@@ -37,7 +37,7 @@ class Signup extends React.Component {
           <div className="row ml-3 ml-sm-3 ml-md-2">
             <div className="col-sm-12 offset-md-2 col-md-8 col-xs mb-5">
               <Descript
-                class="description light"
+                className="description light"
                 content="Zwallet is an application that focussing in banking needs for
                 all users in the world. Always updated and always following
                 world trends. 5000+ users registered in Zwallet everyday with
@@ -59,13 +59,13 @@ class Signup extends React.Component {
               <div className="col-md-9">
                 <Descript
                   id="dark"
-                  class="description"
+                  className="description"
                   content="Create 6 digits pin to secure all your money and your data in Zwallet app. 
                   Keep it secret and don’t tell anyone about your Zwallet account password and the PIN."
                 />
               </div>
               <div className="col-md-11">
-              <div class="form-group form-group-lg pin mr-lg-4 mr-md-3 mr-sm-1 mr-1 mb-md-5 mt-md-4">
+              <div className="form-group form-group-lg pin mr-lg-4 mr-md-3 mr-sm-1 mr-1 mb-md-5 mt-md-4">
                 <InputPin />
               </div>
                 <div className="button btn second w-100">

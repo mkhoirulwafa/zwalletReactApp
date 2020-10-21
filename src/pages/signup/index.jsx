@@ -36,7 +36,7 @@ class Signup extends React.Component {
           <div className="row ml-3 ml-sm-3 ml-md-2">
             <div className="col-sm-12 offset-md-2 col-md-8 col-xs mb-5">
               <Descript
-                class="description light"
+                className="description light"
                 content="Zwallet is an application that focussing in banking needs for
                 all users in the world. Always updated and always following
                 world trends. 5000+ users registered in Zwallet everyday with
@@ -57,7 +57,7 @@ class Signup extends React.Component {
               <div className="col-md-9">
                 <Descript
                   id="dark"
-                  class="description"
+                  className="description"
                   content="Transfering money is eassier than ever, you can access Zwallet
                   wherever you are. Desktop, laptop, mobile phone? we cover all
                   of that for you!"

@@ -1,73 +1,89 @@
-import React from "react";
-import Axios from "axios";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 //components
 import Nav from "../../Components/Nav";
 import SideNav from "../../Components/SideNav";
 import Footer from "../../Components/Footer";
-// import TopupData from './Components/TopupData'
+import { RectShape, TextBlock } from "react-placeholder/lib/placeholders";
 
 //styling
 import "../Topup/src/css/topup.css";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
+import { getUsers } from "./../../redux/actions/Users";
 
-class ProfileData extends React.Component {
-  state = {
-    data: [],
-    number: "",
-    title: "",
-    description: "",
-  };
-
-  componentDidMount() {
-    Axios.get(`http://localhost:8000/api/v1/users`, { params: { id: 7 } }).then(
-      (res) => {
-        console.log(res.data);
-        const data = res.data.data;
-        this.setState({ data });
-      }
+const ProfileData = () => {
+  const dispatch = useDispatch();
+  const { data, loading } = useSelector((s) => s.Users);
+  const Auth = useSelector((s) => s.Auth);
+  useEffect(() => {
+    dispatch(
+      getUsers({
+        id: Auth.data.id,
+        token: Auth.data.token,
+      })
     );
-    Axios({
-      method: "post",
-      url: `http://localhost:8000/api/v1/topup`,
-      data: {
-        number: this.state.number,
-        title: this.state.title,
-        description: this.state.description,
-      },
-    });
-  }
+  }, [dispatch, Auth.data.id, Auth.data.token]);
+  console.log(data);
 
-  render() {
-    return this.state.data.map((item) => {
-      return (
-        <div class="row text-center mt-5">
-          <div class="col-sm-12 col-md-12">
-            <div class="row mb-3">
-              <div class="m-auto">
-                <img src={item.avatar} alt="" class="m-auto" width="70px" />
-                <br />
-              </div>
-            </div>
-            <div class="row ">
-              <p class="m-auto small">
-                <p>Edit</p>
-              </p>
-            </div>
-            <div class="row ">
-              <h6 class="m-auto">
-                <b>{item.fullName}</b>
-              </h6>
-            </div>
+  return (
+    <div className="row text-center mt-5">
+      <div className="col-sm-12 col-md-12">
+        <div className="row mb-3">
+          <div className="m-auto">
+            <img
+              src={
+                loading ? (
+                  <RectShape
+                    delay
+                    showLoadingAnimation
+                    style={{ width: 75, height: 75, borderRadius: 10 }}
+                    color="#f0f0f0"
+                  />
+                ) : (
+                  data.avatar
+                )
+              }
+              alt=""
+              className="m-auto rounded"
+              width="70px"
+            />
+            <br />
           </div>
         </div>
-      );
-    });
-  }
-}
+        <div className="row ">
+          <p className="m-auto small">
+            <p>Edit</p>
+          </p>
+        </div>
+        <div className="row ">
+          <h6 className="m-auto">
+            <b>
+              {loading ? (
+                <TextBlock
+                  delay
+                  showLoadingAnimation
+                  rows={1}
+                  style={{
+                    height: 20,
+                    width: 60,
+                    marginTop: 10,
+                  }}
+                  color="#f0f0f0"
+                />
+              ) : (
+                data.firstName + " " + data.lastName
+              )}
+            </b>
+          </h6>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default function Profile() {
-  let history = useHistory()
+  let history = useHistory();
   return (
     <>
       <Nav />
@@ -78,20 +94,40 @@ export default function Profile() {
             <div className="container card min-vh-100">
               <div className="container">
                 <ProfileData />
-                <div class="row text-center mt-5">
-                  <div class="col-sm-12 offset-md-2 col-md-8 text-center">
-                    <div class="row mb-3">
-                      <button onClick={()=> history.push('/profile/personal')} className="btn btn-lg btn-block second text-left p-3"><b>Personal Information</b></button>
+                <div className="row text-center mt-5">
+                  <div className="col-sm-12 offset-md-2 col-md-8 text-center">
+                    <div className="row mb-3">
+                      <button
+                        onClick={() => history.replace("/profile/personal")}
+                        className="btn btn-lg btn-block second text-left p-3"
+                      >
+                        <b>Personal Information</b>
+                      </button>
                     </div>
-                    <div class="row mb-3">
-                      <button onClick={()=> history.push('/profile/change-password')} className="btn btn-lg btn-block second text-left p-3"><b>Change Password</b></button>
+                    <div className="row mb-3">
+                      <button
+                        onClick={() => history.replace("/profile/change-password")}
+                        className="btn btn-lg btn-block second text-left p-3"
+                      >
+                        <b>Change Password</b>
+                      </button>
                     </div>
-                    <div class="row mb-3">
-                      <button onClick={()=> history.push('/profile/change-pin')} className="btn btn-lg btn-block second text-left p-3"><b>Change PIN</b></button>
+                    <div className="row mb-3">
+                      <button
+                        onClick={() => history.replace("/profile/change-pin")}
+                        className="btn btn-lg btn-block second text-left p-3"
+                      >
+                        <b>Change PIN</b>
+                      </button>
                       <span></span>
                     </div>
-                    <div class="row mb-3">
-                      <button onClick={()=> history.replace('/')} className="btn btn-lg btn-block second text-left p-3"><b>Logout</b></button>
+                    <div className="row mb-3">
+                      <button
+                        onClick={() => history.replace("/")}
+                        className="btn btn-lg btn-block second text-left p-3"
+                      >
+                        <b>Logout</b>
+                      </button>
                     </div>
                   </div>
                 </div>

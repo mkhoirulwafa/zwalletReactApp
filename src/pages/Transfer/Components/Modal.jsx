@@ -24,7 +24,7 @@ function MyVerticallyCenteredModal(props) {
           Enter your 6 digits PIN for confirmation to continue transferring
           money.
         </p>
-        <div class="form-group form-group-lg pin mr-lg-4 mr-md-3 mr-sm-1 mr-1 mb-md-5 mt-md-4">
+        <div className="form-group form-group-lg pin mr-lg-4 mr-md-3 mr-sm-1 mr-1 mb-md-5 mt-md-4">
           <InputPin />
         </div>
       </Modal.Body>
