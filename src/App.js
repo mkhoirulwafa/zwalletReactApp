@@ -16,6 +16,8 @@ import TransferStatus from './pages/Transfer/TransferStatus';
 import Topup from './pages/Topup';
 import Profile from './pages/Profile';
 import ChangePassword from './pages/Profile/ChangePassword';
+import ChangePin from './pages/Profile/ChangePin';
+import NewPin from './pages/Profile/NewPin';
 import PersonalInfo from './pages/Profile/PersonalInfo';
 //Redux Configure Import
 import configureStore from './redux/store';
@@ -46,6 +48,8 @@ const Routes=(props)=>{
         <PrivateRoute component={Topup} path='/topup' />
         <PrivateRoute component={Profile} path='/profile' exact/>
         <PrivateRoute component={PersonalInfo} path='/profile/personal' />
+        <PrivateRoute component={NewPin} path='/profile/change-pin/new-pin' />
+        <PrivateRoute component={ChangePin} path='/profile/change-pin' />
         <PrivateRoute component={ChangePassword} path='/profile/change-password' />
       </Switch>
     </Router>

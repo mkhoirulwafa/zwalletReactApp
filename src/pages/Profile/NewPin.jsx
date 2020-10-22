@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 //components
 import Nav from "../../Components/Nav";
@@ -10,13 +10,14 @@ import Footer from "../../Components/Footer";
 import "../Topup/src/css/topup.css";
 import "react-placeholder/lib/reactPlaceholder.css";
 import Descript from "../login/src/components/Description";
-import { useHistory } from "react-router-dom";
+import { updateUsers } from "../../redux/actions/Users";
 
-export default function ChangePin(props) {
-  const [currentPin, setCurrentPin] = useState("");
-  const Users = useSelector((s) => s.Users);
+export default function NewPin(props) {
+  const [pin, setPin] = useState("");
+  const dispatch = useDispatch();
+  const Auth = useSelector((s) => s.Auth);
 
-  const history = useHistory();
+
   const handleChange = (e) => {
     if (isNaN(parseInt(e.target.value))) {
       e.target.value = "";
@@ -34,7 +35,7 @@ export default function ChangePin(props) {
     for (let i = 0; i < input.length; i++) {
       temp += input[i].value;
     }
-    setCurrentPin(temp)
+    setPin(temp)
   };
   const handleNext = (e) => {
     let nextInput = document.getElementsByTagName("input");
@@ -50,7 +51,7 @@ export default function ChangePin(props) {
               for(let j=0;j<nextInput.length-1;i++){
                   nextInput[i+j].value = "";
               }
-              setCurrentPin('')
+              setPin('')
             } else if (nextInput[i].value) {
               nextInput[i].value = "";
             } else {
@@ -64,12 +65,17 @@ export default function ChangePin(props) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (currentPin === Users.data.pin) {
-      history.push("/profile/change-pin/new-pin");
-    } else {
-      alert("Wrong Current Pin");
-      setCurrentPin("");
-    }
+    dispatch(
+        updateUsers({
+          token: Auth.data.token,
+          id: Auth.data.id,
+          data: {
+            pin: pin,
+          },
+          history: props.history,
+        })
+      );
+    alert('Pin Changed Successfully!')
   };
 
   return (
@@ -90,61 +96,25 @@ export default function ChangePin(props) {
                   <Descript
                     id="dark"
                     className="description mt-3"
-                    content="Type your current 6 digits security PIN to use in Zwallet."
+                    content="Type your new 6 digits security PIN to use in Zwallet."
                   />
                 </div>
                 <div className="row">
                   <div className="form-group form-group-lg pin mr-lg-4 mr-md-3 mr-sm-1 mr-1 mb-md-5 mt-md-4">
-                    <input
-                      onChange={(e) => handleChange(e)}
-                      type="text"
-                      maxLength="1"
-                      className="mr-2"
-                      required
-                    />
-                    <input
-                      onChange={(e) => handleChange(e)}
-                      type="text"
-                      maxLength="1"
-                      className="mr-2"
-                      required
-                    />
-                    <input
-                      onChange={(e) => handleChange(e)}
-                      type="text"
-                      maxLength="1"
-                      className="mr-2"
-                      required
-                    />
-                    <input
-                      onChange={(e) => handleChange(e)}
-                      type="text"
-                      maxLength="1"
-                      className="mr-2"
-                      required
-                    />
-                    <input
-                      onChange={(e) => handleChange(e)}
-                      type="text"
-                      maxLength="1"
-                      className="mr-2"
-                      required
-                    />
-                    <input
-                      onChange={(e) => handleEndPin(e)}
-                      type="text"
-                      maxLength="1"
-                      required
-                    />
+                    <input onChange={(e) => handleChange(e)} type="text" maxLength="1" className="mr-2" required/>
+                    <input onChange={(e) => handleChange(e)} type="text" maxLength="1" className="mr-2" required/>
+                    <input onChange={(e) => handleChange(e)} type="text" maxLength="1" className="mr-2" required/>
+                    <input onChange={(e) => handleChange(e)} type="text" maxLength="1" className="mr-2" required/>
+                    <input onChange={(e) => handleChange(e)} type="text" maxLength="1" className="mr-2" required/>
+                    <input onChange={(e) => handleEndPin(e)} type="text" maxLength="1" required/>
                   </div>
-                  <div className="row">{currentPin}</div>
+                  {/* <div className="row">{pin}</div> */}
                   <div className="button btn second w-100">
                     <button
                       type="submit"
                       className="btn btn-lg btn-block"
-                      onClick={(e) => onSubmit(e)}
-                    >
-                      <b>Confirm</b>
+                      onClick={(e) => onSubmit(e)}>
+                      <b>Change PIN</b>
                     </button>
                   </div>
                 </div>

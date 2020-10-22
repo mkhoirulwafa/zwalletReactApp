@@ -4,6 +4,7 @@ import Users from './Users';
 import {UpdateUser, DeleteUser} from './Users';
 import Topup from './Topup';
 import Transfer from './Transfer';
+import {History} from './Transfer';
 
 const reducers = combineReducers({
     Auth,
@@ -11,7 +12,8 @@ const reducers = combineReducers({
     UpdateUser,
     DeleteUser,
     Topup,
-    Transfer
+    Transfer,
+    History
     // other: otherReducer,
   })
 

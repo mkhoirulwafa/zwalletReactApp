@@ -38,7 +38,7 @@ const Input = (props) => {
 
 export default function ChangePassword(props) {
   // console.log(props, 'change Password')
-  const [currentPassword, setCurrentPassword] = useState("");
+  // const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPassword2, setNewPassword2] = useState("");
   const dispatch = useDispatch();
@@ -90,7 +90,7 @@ export default function ChangePassword(props) {
                       <Input
                         id="currentPassword"
                         placeholder="Current Password"
-                        onChange={(e) => setCurrentPassword(e.target.value)}
+                        // onChange={(e) => setCurrentPassword(e.target.value)}
                       />
                       <Input
                         id="newPassword"
@@ -102,9 +102,9 @@ export default function ChangePassword(props) {
                         placeholder="Repeat New Password"
                         onChange={(e) => setNewPassword2(e.target.value)}
                       />
-                      <div>{currentPassword}</div>
+                      {/* <div>{currentPassword}</div>
                       <div>{newPassword}</div>
-                      <div>{newPassword2}</div>
+                      <div>{newPassword2}</div> */}
                       <div className="button btn second w-100 mt-5">
                         <button type="submit" className="btn btn-lg btn-block">
                           <b>Change Password</b>

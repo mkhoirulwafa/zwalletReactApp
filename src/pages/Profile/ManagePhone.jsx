@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 //components
@@ -11,13 +11,13 @@ import "../Topup/src/css/topup.css";
 import { TextBlock } from "react-placeholder/lib/placeholders";
 import "react-placeholder/lib/reactPlaceholder.css";
 import Descript from "../login/src/components/Description";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getUsers } from "./../../redux/actions/Users";
 import { useHistory } from "react-router-dom";
 
-const Detail = (props) => {
-  const history = useHistory()
+const Phone = (props) => {
   const dispatch = useDispatch();
+  console.log(props)
 
   const Auth = useSelector((s) => s.Auth);
   const { data, loading } = useSelector((s) => s.Users);
@@ -108,7 +108,9 @@ const Detail = (props) => {
                     <button
                     type="submit"
                     onClick={() =>
-                      history.push({
+                      props.history.push({
+                        pathname: "/profile/phone",
+                        input: item.phone
                       })
                     }
                     className="btn second btn-lg text-black-50"
@@ -125,7 +127,7 @@ const Detail = (props) => {
   });
 };
 
-export default function PersonalInfo(props) {
+export default function ManagePhone(props) {
   return (
     <>
       <Nav />
@@ -137,7 +139,7 @@ export default function PersonalInfo(props) {
               <div className="container">
                 <div className="row main-title mt-3 ml-2">
                   <h6>
-                    <b> Personal Information </b>
+                    <b> Manage Phone Number </b>
                   </h6>
                 </div>
                 <div className="row">
@@ -145,14 +147,14 @@ export default function PersonalInfo(props) {
                     <Descript
                       id="dark"
                       className="description mt-3"
-                      content="We got your personal information from the sign up proccess. If you want to make changes on your information, contact our support."
+                      content="You can only delete the phone number and then you must add another phone number."
                     />
                   </div>
                   <div className="col-6"></div>
                 </div>
                 <div className="row">
                   <div className="col justify-content-center container">
-                    <Detail />
+                    <Phone {...props} />
                   </div>
                 </div>
               </div>

@@ -36,6 +36,23 @@ const UpdateUserError = (error) => {
     payload: error,
   };
 };
+const UploadRequest = () => {
+  return {
+    type: "UPLOAD_REQUEST",
+  };
+};
+const UploadSuccess = (data) => {
+  return {
+    type: "UPLOAD_SUCCESS",
+    payload: data,
+  };
+};
+const UploadError = (error) => {
+  return {
+    type: "UPLOAD_ERROR",
+    payload: error,
+  };
+};
 
 const DeleteUserRequest = () => {
   return {
@@ -63,13 +80,15 @@ export const getUsers = (fields) => {
       method: "get",
       url: `http://localhost:8000/api/v1/users/${fields.id}`,
       headers: {
-        "token": fields.token,
+        token: fields.token,
       },
     })
       .then((res) => {
-        const data = res.data.data
+        const data = res.data.data;
         dispatch(UsersSuccess(data));
-        console.log(`${res.data.data} , ini di fetch USERS yaaaaaa butuh token:(`);
+        console.log(
+          `${res.data.data} , ini di fetch USERS yaaaaaa butuh token:(`
+        );
       })
       .catch((err) => {
         dispatch(UsersError(err.message));
@@ -83,42 +102,78 @@ export const updateUsers = (fields) => {
     dispatch(UpdateUserRequest());
     const data = fields.data;
     return Axios({
-      method: "patch",
-      url: `http://localhost:8000/api/v1/users/${fields.id}`,
+      method: "post",
+      url: `http://localhost:8000/api/v1/users/avatar/${fields.id}`,
       data: data,
       headers: {
-        "token": `Bearer ${fields.token}`,
+        token: `Bearer ${fields.token}`,
+        "content-type": "multipart/form-data",
       },
     })
       .then((res) => {
-        const data = res.data.data
+        let urlImage = res.data.image
+        Axios({
+          method: "patch",
+          url: `http://localhost:8000/api/v1/users/${fields.id}`,
+          data: {...fields.data, avatar: urlImage},
+          headers: {
+            token: `Bearer ${fields.token}`,
+          },
+        });
+      })
+      .then((res) => {
+        const data = res.data.data;
         dispatch(UpdateUserSuccess(data));
         console.log(`${res.data.data} , update Users`);
-        fields.history.push('/profile')
+        fields.history.push("/profile");
       })
       .catch((err) => {
         dispatch(UpdateUserError(err.message));
       });
   };
 };
+export const uploadAvatar = (fields) => {
+  return (dispatch) => {
+    dispatch(UploadRequest());
+    const data = fields.data;
+    return Axios({
+      method: "patch",
+      url: `http://localhost:8000/api/v1/users/avatar/${fields.id}`,
+      data: data,
+      headers: {
+        token: `Bearer ${fields.token}`,
+        "content-type": "multipart/form-data",
+      },
+    })
+      .then((res) => {
+        const data = res.data.data;
+        dispatch(UploadSuccess(data));
+        console.log(`${res.data.data} , update Users`);
+        fields.history.push("/profile");
+      })
+      .catch((err) => {
+        dispatch(UploadError(err.message));
+      });
+  };
+};
 // delete
 export const DeleteUsers = (fields) => {
-    return (dispatch) => {
-      dispatch(DeleteUserRequest());
-      return Axios({
-        method: "delete",
-        url: `http://localhost:8000/api/v1/users/${fields.id}`,
-        headers: {
-          "token": fields.token,
-        },
+  return (dispatch) => {
+    dispatch(DeleteUserRequest());
+    return Axios({
+      method: "delete",
+      url: `http://localhost:8000/api/v1/users/${fields.id}`,
+      headers: {
+        token: fields.token,
+      },
+    })
+      .then((res) => {
+        const data = res.data.data;
+        dispatch(DeleteUserSuccess(data));
+        console.log(`${res.data.data} , Delete User`);
       })
-        .then((res) => {
-          const data = res.data.data
-          dispatch(DeleteUserSuccess(data));
-          console.log(`${res.data.data} , Delete User`);
-        })
-        .catch((err) => {
-          dispatch(DeleteUserError(err.message));
-        });
-    };
+      .catch((err) => {
+        dispatch(DeleteUserError(err.message));
+      });
   };
+};

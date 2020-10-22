@@ -18,6 +18,23 @@ const TransferError = (error) => {
     payload: error,
   };
 };
+const HistoryRequest = () => {
+  return {
+    type: "HISTORY_REQUEST",
+  };
+};
+const HistorySuccess = (data) => {
+  return {
+    type: "HISTORY_SUCCESS",
+    payload: data,
+  };
+};
+const HistoryError = (error) => {
+  return {
+    type: "HISTORY_ERROR",
+    payload: error,
+  };
+};
 
 //action Get User By Search at Transfer page
 export const getSearch = (fields) => {
@@ -25,7 +42,7 @@ export const getSearch = (fields) => {
       dispatch(TransferRequest());
       return Axios({
         method: "get",
-        url: `http://localhost:8000/api/v1/transfer/search/${fields.key}`,
+        url: `http://localhost:8000/api/v1/transfer/search/${fields.id}/${fields.key}`,
         headers: {
           "token": fields.token,
         },
@@ -37,6 +54,27 @@ export const getSearch = (fields) => {
         })
         .catch((err) => {
           dispatch(TransferError(err.message));
+        });
+    };
+  };
+export const getHistory = (fields) => {
+    return (dispatch) => {
+      dispatch(HistoryRequest());
+      return Axios({
+        method: "get",
+        url: `http://localhost:8000/api/v1/transfer/${fields.id}`,
+        headers: {
+          "token": fields.token,
+        },
+      })
+        .then((res) => {
+          console.log(res.data, 'PLIS')
+          const data = res.data.data
+          dispatch(HistorySuccess(data));
+          console.log(`${res.data.data} , ini di history`);
+        })
+        .catch((err) => {
+          dispatch(HistoryError(err.message));
         });
     };
   };

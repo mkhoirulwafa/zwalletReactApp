@@ -23,10 +23,11 @@ const Receiver = (props) => {
     dispatch(
       getSearch({
         token: Auth.data.token,
+        id: Auth.data.id,
         key: key,
       })
     );
-  }, [key, dispatch, Auth.data.token]);
+  }, [key, dispatch, Auth.data.id, Auth.data.token]);
 
   let imgDefault =
     "https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/prof/blank.png?raw=true";

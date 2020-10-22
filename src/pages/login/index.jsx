@@ -10,7 +10,6 @@ import "./src/css/login.css";
 //components
 import Descript from "./src/components/Description";
 import LeftSide from "../../Components/LeftSide";
-// import { login } from "./../../Utils/index";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");

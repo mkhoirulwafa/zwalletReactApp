@@ -11,6 +11,7 @@ import { RectShape, TextBlock } from "react-placeholder/lib/placeholders";
 import "../Topup/src/css/topup.css";
 import { useHistory } from "react-router-dom";
 import { getUsers } from "./../../redux/actions/Users";
+import ButtonModal from "./Components/ModalUpload";
 
 const ProfileData = () => {
   const dispatch = useDispatch();
@@ -52,9 +53,7 @@ const ProfileData = () => {
           </div>
         </div>
         <div className="row ">
-          <p className="m-auto small">
-            <p>Edit</p>
-          </p>
+          <ButtonModal/>
         </div>
         <div className="row ">
           <h6 className="m-auto">
