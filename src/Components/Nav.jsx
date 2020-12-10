@@ -52,8 +52,8 @@ export default function Navbar(props) {
                 <div className="col-3 col-sm-3 col-md-3">
                   <div className="container">
                     <img
-                    width={50}
-                    height={60}
+                    // width={50}
+                    // height={50}
                       src={
                         data.avatar === ""
                           ? "https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/prof/blank.png?raw=true"

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import Axios from "axios";
+// import Axios from "axios";
 
 //components
 import Nav from "../../Components/Nav";
@@ -9,8 +9,11 @@ import Footer from "../../Components/Footer";
 //style
 import "../src/css/style.css";
 import "./src/css/inputAmount.css";
+import API from "../../Services";
+import { useSelector } from "react-redux";
 
 const Receiver = (props) => {
+  const { avatar, name, phone } = props.location.state
   return (
     <div className="row">
       <div className="col-sm-12 col-md-12 mb-3">
@@ -18,13 +21,13 @@ const Receiver = (props) => {
             <div className="container">
               <div className="row">
                 <div className="col-2 col-sm-2 col-md-2 col-lg-1">
-                  <img src={props.img} alt="" />
+                  <img src={avatar} alt="" />
                 </div>
                 <div className="col-10 col-sm-10 col-md-10 col-lg-11 pl-5 pl-sm-5 pt-1">
                   <p>
-                    <b>{props.name}</b>
+                    <b>{name}</b>
                   </p>
-                  <p className="small">{`+62 ${props.phone}`}</p>
+                  <p className="small">{`+${phone}`}</p>
                 </div>
               </div>
             </div>
@@ -35,29 +38,17 @@ const Receiver = (props) => {
 };
 
 const Main = (props) => {
-  const [amount, setAmount] = React.useState("");
-  const [balance, setBalance] = React.useState(120000);
+  const [amount, setAmount] = React.useState('');
+  // const [balance, setBalance] = React.useState(120000);
   const [notes, setNotes] = React.useState("");
-  const [data, setData] = React.useState([]);
-
-  const {
-    location: { receiver },
-  } = props;
+  const [data, setData] = React.useState();
+  const Auth = useSelector((s)=> s.Auth)
 
   React.useEffect(() => {
-    Axios.get(`http://localhost:8000/api/v1/users`, {
-      params: { id: 7 },
+    API.Profile(Auth.data.token, Auth.data.id).then((res)=>{
+      setData(res)
     })
-      .then((res) => {
-        // console.log(res.data);
-        const data = res.data.data[0];
-        setData(data);
-        setBalance(data.balance);
-      })
-      .catch((err) => {
-        setData(err.message);
-      });
-  }, []);
+  });
 
   //Validasi Number & Set to Amount
   const handleChange = (e) => {
@@ -81,11 +72,7 @@ const Main = (props) => {
                   </h6>
                   <br />
                 </div>
-                <Receiver
-                  img={receiver.avatar}
-                  name={receiver.name}
-                  phone={receiver.phone}
-                />
+                <Receiver/>
                 <div className="row mt-2 mb-2">
                   <div className="col-sm-12 col-md-6">
                     <p className="secondary">
@@ -105,6 +92,7 @@ const Main = (props) => {
                         type="text"
                         placeholder="0.00"
                         maxLength="14"
+                        // value={amount}
                       />
                     </h1>
                   </div>
@@ -112,7 +100,7 @@ const Main = (props) => {
                 <div className="row">
                   <div className="col-sm-12 col-md-12 mb-2">
                     <p className="text-center">
-                      <b>Rp{balance - amount} Available</b> {/*  BALANCE */}
+                      <b>Rp{Number(data?.balance) - Number(amount)} Available</b> {/*  BALANCE */}
                     </p>
                   </div>
                 </div>
@@ -139,11 +127,11 @@ const Main = (props) => {
                             onClick={() =>
                               props.history.push({
                                 pathname: "/confirmation",
-                                receiver: {...receiver},
+                                receiver: {...props.location.state},
                                 input: {
                                   amount: amount,
                                   notes: notes,
-                                  balance: (balance-amount),
+                                  balance: (Number(data?.balance)-Number(amount)),
                                   profileData: data,
                                 }
                               })
@@ -152,6 +140,8 @@ const Main = (props) => {
                           >
                             Continue
                           </button>
+                          <p>{amount}</p>
+                          <p>{notes}</p>
                         </Link>
                       </div>
                     </div>

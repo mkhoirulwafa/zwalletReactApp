@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 //components
@@ -19,6 +19,7 @@ const Receiver = (props) => {
   const [loading, setLoading] = React.useState(false);
   const dispatch = useDispatch();
   const Auth = useSelector((s) => s.Auth);
+  const history = useHistory()
 
   React.useEffect(() => {
     setLoading(true)
@@ -71,7 +72,14 @@ const Receiver = (props) => {
               >
                 <div className="col-sm-12 col-md-12 mb-3">
                   <div className="card border-0">
-                    <Link to="/input-amount">
+                    <Link to={{
+                      pathname: '/input-amount',
+                      state: {
+                        avatar: item.avatar,
+                        name: item.fullName,
+                        phone: item.phone
+                      }
+                    }}>
                       <div className="container">
                         <div className="row">
                           <div className="col-2 col-sm-2 col-md-2 col-lg-1">

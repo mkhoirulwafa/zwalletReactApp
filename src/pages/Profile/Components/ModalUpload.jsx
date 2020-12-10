@@ -22,16 +22,16 @@ const MyVerticallyCenteredModal = (props) => {
     const formData = new FormData();
     formData.append("avatar", avatarUrl);
 
-    dispatch(
-      updateUsers({
-        id: Auth.data.id,
-        token: Auth.data.token,
-        data: {
-          avatar: avatarUrl,
-        },
-        history: props.history,
-      })
-    );
+    // dispatch(
+    //   updateUsers({
+    //     id: Auth.data.id,
+    //     token: Auth.data.token,
+    //     data: {
+    //       avatar: avatarUrl,
+    //     },
+    //     history: props.history,
+    //   })
+    // );
   };
 
   return (
@@ -72,7 +72,7 @@ const MyVerticallyCenteredModal = (props) => {
             <input
               type="file"
               name="avatar"
-              onChange={(e) => setAvatarUrl(e.target.file[0])}
+              onChange={(e) => console.log(e.target)}
             />{" "}
             <br />
             <br />
@@ -108,13 +108,13 @@ function ButtonModal(props) {
   return (
     <>
       <center>
-        <Button
+        <div
           variant=""
           onClick={() => handleSubmit()}
-          className="btn btn-sm"
+          className="m-2"
         >
           Edit
-        </Button>
+        </div>
       </center>
       <MyVerticallyCenteredModal
         show={modalShow}
