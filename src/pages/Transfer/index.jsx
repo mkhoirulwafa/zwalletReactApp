@@ -106,7 +106,7 @@ const Transfer = (props) => {
     <>
       <Nav />
       <div className="container">
-        <div className="row mr-5 ml-5">
+        <div className="row mr-5 ml-5 min-vw-70">
           <SideNav />
           <div className="col-12 col-sm-12 col-md-10 col-lg-9">
             <div className="container card min-vh-100">

@@ -68,7 +68,7 @@ export default function ChangePin(props) {
     API.Profile(Auth.data.token, Auth.data.id).then((res)=>{
       setPinNow(res.pin)
     })
-  }, [])
+  })
 
   const onSubmit = (e) => {
     e.preventDefault();

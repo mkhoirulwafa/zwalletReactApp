@@ -12,6 +12,7 @@ import "../Topup/src/css/topup.css";
 import { useHistory } from "react-router-dom";
 import ButtonModal from "./Components/ModalUpload";
 import API from "../../Services";
+import { AuthLogout } from "../../redux/actions/Auth";
 
 const ProfileData = () => {
   const [dataUser, setDataUser] = React.useState();
@@ -86,6 +87,11 @@ const ProfileData = () => {
 
 export default function Profile() {
   let history = useHistory();
+  const dispatch = useDispatch()
+  const onLogout = () => {
+    dispatch(AuthLogout())
+    history.replace("/");
+  };
   return (
     <>
       <Nav />
@@ -125,7 +131,7 @@ export default function Profile() {
                     </div>
                     <div className="row mb-3">
                       <button
-                        onClick={() => history.replace("/")}
+                        onClick={() => onLogout()}
                         className="btn btn-lg btn-block second text-left p-3"
                       >
                         <b>Logout</b>
