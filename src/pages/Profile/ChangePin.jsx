@@ -11,10 +11,12 @@ import "../Topup/src/css/topup.css";
 import "react-placeholder/lib/reactPlaceholder.css";
 import Descript from "../login/src/components/Description";
 import { useHistory } from "react-router-dom";
+import API from "../../Services";
 
 export default function ChangePin(props) {
   const [currentPin, setCurrentPin] = useState("");
-  const Users = useSelector((s) => s.Users);
+  const [pinNow, setPinNow] = useState("");
+  const [isError, setIsError] = useState(false);
 
   const history = useHistory();
   const handleChange = (e) => {
@@ -61,14 +63,23 @@ export default function ChangePin(props) {
       }
     }
   };
+  const Auth = useSelector((s)=> s.Auth)
+  React.useEffect(()=>{
+    API.Profile(Auth.data.token, Auth.data.id).then((res)=>{
+      setPinNow(res.pin)
+    })
+  }, [])
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (currentPin === Users.data.pin) {
+    if (currentPin === pinNow) {
       history.push("/profile/change-pin/new-pin");
     } else {
-      alert("Wrong Current Pin");
+      setIsError(true)
       setCurrentPin("");
+      setTimeout(()=>{
+        setIsError(false)
+      }, 2000)
     }
   };
 
@@ -93,8 +104,9 @@ export default function ChangePin(props) {
                     content="Type your current 6 digits security PIN to use in Zwallet."
                   />
                 </div>
+                <div className='mx-auto mb-3 mt-3'><p className='text-danger'>{!isError ? '' : 'Wrong Current Pin'}</p></div>
                 <div className="row">
-                  <div className="form-group form-group-lg pin mr-lg-4 mr-md-3 mr-sm-1 mr-1 mb-md-5 mt-md-4">
+                  <div className="form-group form-group-lg pin mb-md-5 mt-md-4 mx-auto">
                     <input
                       onChange={(e) => handleChange(e)}
                       type="text"
@@ -137,7 +149,7 @@ export default function ChangePin(props) {
                       required
                     />
                   </div>
-                  <div className="row">{currentPin}</div>
+                  {/* <div className="row">{currentPin}</div> */}
                   <div className="button btn second w-100">
                     <button
                       type="submit"

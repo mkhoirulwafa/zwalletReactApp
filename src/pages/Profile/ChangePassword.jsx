@@ -1,19 +1,17 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 //components
 import Nav from "../../Components/Nav";
 import SideNav from "../../Components/SideNav";
 import Footer from "../../Components/Footer";
-// import TopupData from './Components/TopupData'
 
 //styling
 import "../Topup/src/css/topup.css";
-// import { GetTopup } from "./../../redux/actions/Topup";
-// import { TextBlock } from "react-placeholder/lib/placeholders";
 import "react-placeholder/lib/reactPlaceholder.css";
 import Descript from "../login/src/components/Description";
 import {updateUsers} from '../../redux/actions/Users';
+import API from "../../Services";
 
 const Input = (props) => {
   return (
@@ -38,28 +36,30 @@ const Input = (props) => {
 
 export default function ChangePassword(props) {
   // console.log(props, 'change Password')
-  // const [currentPassword, setCurrentPassword] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPassword2, setNewPassword2] = useState("");
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const Auth = useSelector((s) => s.Auth);
+  const [isError, setIsError]= useState(false)
   
   
   const onSubmit = (e) => {
     e.preventDefault()
     if (newPassword2 === newPassword) {
-      dispatch(
-        updateUsers({
-          token: Auth.data.token,
-          id: Auth.data.id,
-          data: {
-            password: newPassword2,
-          },
-          history: props.history,
-        })
-      );
+      API.UpdateUser(Auth.data.token, {currentPassword: currentPassword, password: newPassword}).then((res)=>{
+        props.history.push('/profile')
+      }).catch(()=> {
+        setIsError(true)
+        setTimeout(()=>{
+          setIsError(false)
+        }, 2000)
+      })
     } else {
-      alert("Repeat your new Password Correctly!");
+      setIsError(true)
+      setTimeout(()=>{
+        setIsError(false)
+      }, 2000)
     }
   };
   
@@ -90,7 +90,7 @@ export default function ChangePassword(props) {
                       <Input
                         id="currentPassword"
                         placeholder="Current Password"
-                        // onChange={(e) => setCurrentPassword(e.target.value)}
+                        onChange={(e) => setCurrentPassword(e.target.value)}
                       />
                       <Input
                         id="newPassword"
@@ -105,6 +105,7 @@ export default function ChangePassword(props) {
                       {/* <div>{currentPassword}</div>
                       <div>{newPassword}</div>
                       <div>{newPassword2}</div> */}
+                      <div className='m-auto mb-3 mt-3'><p className='text-danger'>{!isError ? '' : 'Failed to Change Password, Your current or new password might be invalid'}</p></div>
                       <div className="button btn second w-100 mt-5">
                         <button type="submit" className="btn btn-lg btn-block">
                           <b>Change Password</b>

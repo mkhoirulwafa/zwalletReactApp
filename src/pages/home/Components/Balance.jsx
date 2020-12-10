@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from "./../../../redux/actions/Users";
 import { Link } from "react-router-dom";
 
 //components
 import Button from "./Button";
 import IncomeExpense from "./IncomeExpense";
-import { RectShape, TextBlock } from "react-placeholder/lib/placeholders";
+import {  TextBlock } from "react-placeholder/lib/placeholders";
 
 import "react-placeholder/lib/reactPlaceholder.css";
 import API from "../../../Services";
@@ -19,10 +18,12 @@ const Balance = () => {
   const [loading, setLoading] = React.useState(false);
 
   useEffect(() => {
-    API.Profile(Auth?.data?.token, Auth?.data?.id).then((res)=>{
+    setLoading(true)
+    API.Profile(Auth.data.token, Auth.data.id).then((res)=>{
       setDataUser(res)
+      setLoading(false)
     })
-  }, [dispatch, Auth]);
+  }, [dispatch, Auth.data.token, Auth.data.id]);
 
   return (
     <div className="col col-sm col-md col-lg">

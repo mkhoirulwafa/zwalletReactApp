@@ -1,6 +1,5 @@
 import React from 'react';
 import {Col, Container, Row} from 'react-bootstrap'
-import Descript from "../pages/login/src/components/Description";
 
 const LeftSide = () => {
     return (

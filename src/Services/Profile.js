@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-import { USER_URI, TRANSFER_URI } from "../Utils/URI";
+import { USER_URI } from "../Utils/URI";
 
 const DeletePhone = (token, id) => {
   const promise = new Promise((resolve, reject) => {
@@ -18,21 +18,23 @@ const DeletePhone = (token, id) => {
   });
   return promise;
 };
-// const HistoryTransaction = (token, id, limit) => {
-//   const promise = new Promise((resolve, reject) => {
-//     Axios.get(`${TRANSFER_URI}/history/${id}?limit=${limit}`, {
-//       headers: {
-//         token: `Bearer ${token}`,
-//       },
-//     })
-//       .then((result) => {
-//         resolve(result.data.data);
-//         console.log(result.data.data);
-//         console.log("=======resuyykkkktt========");
-//       })
-//       .catch((err) => {});
-//   });
-//   return promise;
-// };
+const UpdateUser = (token, data) => {
+  const promise = new Promise((resolve, reject) => {
+    Axios.patch(`${USER_URI}`, data, {
+      headers: {
+        token: `Bearer ${token}`,
+      },
+    })
+      .then((result) => {
+        resolve(result.data.data);
+        console.log(result.data.data);
+        console.log("=======resuyykkkktt========");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+  return promise;
+};
 
-export { DeletePhone };
+export { DeletePhone, UpdateUser };

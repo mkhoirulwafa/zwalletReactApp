@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { AuthLogin } from "../../redux/actions/Auth";
 import { Link } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";

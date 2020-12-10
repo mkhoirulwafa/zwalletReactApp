@@ -26,8 +26,10 @@ const Detail = (props) => {
 
 
   useEffect(() => {
+    setLoading(true)
     API.Profile(data?.token, data?.id).then((res)=>{
       setDataUser(res)
+      setLoading(false)
     })
   }, [dispatch, data]);
   let details = [

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 //components
@@ -10,7 +10,6 @@ import { RectShape, TextBlock } from "react-placeholder/lib/placeholders";
 //styling
 import "../Topup/src/css/topup.css";
 import { useHistory } from "react-router-dom";
-import { getUsers } from "./../../redux/actions/Users";
 import ButtonModal from "./Components/ModalUpload";
 import API from "../../Services";
 
@@ -23,8 +22,10 @@ const ProfileData = () => {
 
 
   React.useEffect(() => {
+    setLoading(true)
     API.Profile(data?.token, data?.id).then((res)=>{
       setDataUser(res)
+      setLoading(false)
     })
   }, [dispatch, data]);
 
@@ -56,7 +57,7 @@ const ProfileData = () => {
         <div className="row justify-content-center">
           <ButtonModal/>
         </div>
-        <div className="row ">
+        <div className="row d-flex flex-direction-column">
           <h6 className="m-auto">
             <b>
               {loading ? (
@@ -77,6 +78,7 @@ const ProfileData = () => {
             </b>
           </h6>
         </div>
+          <p className="m-auto">+{dataUser?.phone}</p>
       </div>
     </div>
   );

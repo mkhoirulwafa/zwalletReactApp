@@ -26,7 +26,9 @@ const HistoryTransaction = (token, id, limit) => {
       .then((result) => {
         resolve(result.data.data);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err);
+      });
   });
   return promise;
 };

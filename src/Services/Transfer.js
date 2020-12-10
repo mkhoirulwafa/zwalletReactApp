@@ -1,6 +1,6 @@
 import Axios from "axios";
 
-import { USER_URI, TRANSFER_URI } from "../Utils/URI";
+import { USER_URI } from "../Utils/URI";
 
 const Search = (token, key, limit) => {
   const promise = new Promise((resolve, reject) => {

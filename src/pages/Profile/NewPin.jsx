@@ -11,10 +11,11 @@ import "../Topup/src/css/topup.css";
 import "react-placeholder/lib/reactPlaceholder.css";
 import Descript from "../login/src/components/Description";
 import { updateUsers } from "../../redux/actions/Users";
+import API from "../../Services";
 
 export default function NewPin(props) {
   const [pin, setPin] = useState("");
-  const dispatch = useDispatch();
+  const [isError, setIsError] = useState(false);
   const Auth = useSelector((s) => s.Auth);
 
 
@@ -65,17 +66,14 @@ export default function NewPin(props) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(
-        updateUsers({
-          token: Auth.data.token,
-          id: Auth.data.id,
-          data: {
-            pin: pin,
-          },
-          history: props.history,
-        })
-      );
-    alert('Pin Changed Successfully!')
+    API.UpdateUser(Auth.data.token, {pin: pin}).then((res)=>{
+      props.history.push('/profile')
+    }).catch((err)=>{
+      setIsError(true)
+      setTimeout(()=>{
+        setIsError(false)
+      }, 2000)
+    })
   };
 
   return (
@@ -99,8 +97,9 @@ export default function NewPin(props) {
                     content="Type your new 6 digits security PIN to use in Zwallet."
                   />
                 </div>
+                <div className='mx-auto mb-3 mt-3'><p className='text-danger'>{!isError ? '' : 'Wrong Current Pin'}</p></div>
                 <div className="row">
-                  <div className="form-group form-group-lg pin mr-lg-4 mr-md-3 mr-sm-1 mr-1 mb-md-5 mt-md-4">
+                  <div className="form-group form-group-lg pin mx-auto mb-md-5 mt-md-4">
                     <input onChange={(e) => handleChange(e)} type="text" maxLength="1" className="mr-2" required/>
                     <input onChange={(e) => handleChange(e)} type="text" maxLength="1" className="mr-2" required/>
                     <input onChange={(e) => handleChange(e)} type="text" maxLength="1" className="mr-2" required/>

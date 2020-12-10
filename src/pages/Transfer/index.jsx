@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getSearch } from "./../../redux/actions/Transfer";
 
 //components
 import Nav from "../../Components/Nav";
@@ -20,11 +19,12 @@ const Receiver = (props) => {
   const [loading, setLoading] = React.useState(false);
   const dispatch = useDispatch();
   const Auth = useSelector((s) => s.Auth);
-  // const { data, loading } = useSelector((s) => s.Transfer);
 
   React.useEffect(() => {
+    setLoading(true)
     API.Search(Auth.data.token, key, props.limit).then((res)=>{
       setDataUsers(res)
+      setLoading(false)
     })
   }, [key, dispatch, Auth.data.token, props.limit]);
 
@@ -55,6 +55,7 @@ const Receiver = (props) => {
           return (
             <>
               <div
+                key={item.id}
                 onClick={() =>
                   props.history.push({
                     pathname: "/input-amount",
@@ -112,7 +113,7 @@ const Transfer = (props) => {
               <div className="container">
                 <Receiver {...props} limit={limit} />
                 <div className='text-center m-3'>
-                  <a className='text-primary' onClick={()=> setLimit(limit+3)}>Load More</a>
+                  <div className='text-primary' onClick={()=> setLimit(limit+3)}>Load More</div>
                 </div>
               </div>
             </div>

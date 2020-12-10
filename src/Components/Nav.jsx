@@ -19,8 +19,10 @@ export default function Navbar(props) {
   // console.log(`${Auth.data},  HALOOOO`);
 
   React.useEffect(() => {
+    setLoading(true)
     API.Profile(data?.token, data?.id).then((res)=>{
       setDataUser(res)
+      setLoading(false)
     })
   }, [dispatch, data]);
 
