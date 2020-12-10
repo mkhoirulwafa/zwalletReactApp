@@ -1,55 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
+import "./styles.css";
 
-class InputPin extends React.Component{
-    constructor(props){
-        super(props)
-        this.handleChange = this.handleChange.bind(this)
+function Border(props) {
+  const { length, onChange, className } = props;
+  const inputLength = useState(Array(length).fill(""))[0];
+  const createRef = [];
+
+  const _onChangeInput = (i, value) => {
+    let currentIndex = i;
+    inputLength[i] = value;
+
+    if (value.length === 1 && i < length - 1) {
+      currentIndex += 1;
+      createRef[currentIndex].focus();
     }
 
-    handleChange=(e)=>{
-        if(isNaN(parseInt(e.target.value))){
-            e.target.value = ''
-        } else{
-            this.handleNext(e)
-        }
-    }
-    handleNext = (e)=>{
-        let nextInput = document.getElementsByTagName('input')
-        for (let i = 0; i < nextInput.length; i++) {
-            if(nextInput[i].value && i !== nextInput.length-1) {
-                nextInput[i+1].focus()
-            }
+    const pinString = inputLength.join("");
+    onChange(pinString);
+  };
 
-            if(!nextInput[i].value) {
-                 nextInput[i].addEventListener('keydown', e => {
-                     console.log(e)
-                     if(e.key === 'Backspace' || e.key === 'Delete') {
-                         if(i === nextInput.length-1 && nextInput[i].value) {
-                             nextInput[i].value = ""
-                         } else if(nextInput[i].value) {
-                             nextInput[i].value = ""
-                         } else {
-                             nextInput[i-1].focus()
-                         }
-                     }
-                 })
-            }
-         }
+  const _onBackspace = (i, key) => {
+    if (key === "Backspace") {
+      if (!inputLength[i]) {
+        if (i > 0) createRef[i - 1].focus();
+      }
     }
-    render(){
-        return (
-            <>
-              <div className="col-12 col-sm-12 col-md-12 text-center w-100" >
-                <input onChange={this.handleChange} type="text" maxLength="1" className='mr-2' required/>
-                <input onChange={this.handleChange} type="text" maxLength="1" className='mr-2' required/>
-                <input onChange={this.handleChange} type="text" maxLength="1" className='mr-2' required/>
-                <input onChange={this.handleChange} type="text" maxLength="1" className='mr-2' required/>
-                <input onChange={this.handleChange} type="text" maxLength="1" className='mr-2' required/>
-                <input onChange={this.handleChange} type="text" maxLength="1" required/>
-              </div>
-            </>
-          );
-    }
+  };
+
+  return (
+    <>
+      {inputLength.map((_, k) => (
+        <div key={k} className={className}>
+          <input
+            ref={(input) => (createRef[k] = input)}
+            onChange={(e) => _onChangeInput(k, e.target.value)}
+            onKeyDown={(e) => _onBackspace(k, e.key)}
+            className="input-bordered-small font-weight-bold rounded-14 ml-3"
+            type="text"
+            maxLength="1"
+            placeholder="_"
+          />
+        </div>
+      ))}
+    </>
+  );
 }
 
-export default InputPin
+export default Border;

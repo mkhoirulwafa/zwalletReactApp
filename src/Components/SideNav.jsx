@@ -13,13 +13,13 @@ export default function SideNav(props) {
     history.replace("/");
   };
   return (
-    <div className="d-none d-sm-none d-md-none d-lg-block col-sm-2 col-md-4 col-lg-3 rounded rounded-bottom mb-4 min-vh-100" id="navbarSupportedContent">
+    <div className="d-none d-sm-none d-md-none d-lg-block col-sm-2 col-md-4 col-lg-3 rounded rounded-bottom mb-4 min-vh-70" id="navbarSupportedContent">
       <ul className="card list-group d-flex rounded-bottom">
         <Li location={location}/>
-        <Link onClick={()=> onLogout()} className='mt-5'>
+        <Link onClick={()=> onLogout()} to='/'>
           <li
             key= '5'
-            className="list-group-item border-0 mb-4 rounded align-end"
+            className="list-group-item border-0 rounded align-end"
           >
             <div className="row pt-1">
               <div className="col-sm-2 col-md-2">

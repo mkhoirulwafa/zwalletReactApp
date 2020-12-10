@@ -12,49 +12,53 @@ import { TextBlock } from "react-placeholder/lib/placeholders";
 import "react-placeholder/lib/reactPlaceholder.css";
 import Descript from "../login/src/components/Description";
 // import { Link } from "react-router-dom";
-import { getUsers } from "./../../redux/actions/Users";
+// import { getUsers } from "./../../redux/actions/Users";
 import { useHistory } from "react-router-dom";
+import API from "../../Services";
 
 const Detail = (props) => {
   const history = useHistory()
+  const [dataUser, setDataUser] = React.useState();
+  const [loading, setLoading] = React.useState(false);
   const dispatch = useDispatch();
+  // const { data, loading } = useSelector((s) => s.Users);
+  const {data} = useSelector((s) => s.Auth);
 
-  const Auth = useSelector((s) => s.Auth);
-  const { data, loading } = useSelector((s) => s.Users);
 
   useEffect(() => {
-    dispatch(
-      getUsers({
-        token: Auth.data.token,
-        id: Auth.data.id,
-      })
-    );
-  }, [Auth.data.token, Auth.data.id, dispatch]);
+    API.Profile(data?.token, data?.id).then((res)=>{
+      setDataUser(res)
+    })
+  }, [dispatch, data]);
   let details = [
     {
+      id:0,
       title: "First Name",
-      value: data.firstName,
+      value: dataUser?.firstName,
       trailing: false,
     },
     {
+      id:1,
       title: "Last Name",
-      value: data.lastName,
+      value: dataUser?.lastName,
       trailing: false,
     },
     {
+      id:2,
       title: "Verified E-mail",
-      value: data.email,
+      value: dataUser?.email,
       trailing: false,
     },
     {
+      id:3,
       title: "Phone Number",
-      value: `+${data.phone}`,
+      value: `+${dataUser?.phone}`,
       trailing: true,
     },
   ];
   return details.map((item) => {
     return (
-      <div className="row mt-3">
+      <div className="row mt-3" key={item.id}>
         <div className="col card border-0">
           <div className="container col-12 mb-2 mt-n2">
             <div className="row">

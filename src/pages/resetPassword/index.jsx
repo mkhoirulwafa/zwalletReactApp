@@ -16,18 +16,19 @@ const Reset = () => {
   const [email, setEmail] = React.useState("");
   const [data, setData] = React.useState([]);
   const [status, setStatus] = React.useState('Email not found')
+  const [isDone, setIsDone] = React.useState(true)
 
-  React.useEffect(()=>{
-    Axios({
-      method: 'get',
-      url: `http://localhost:8000/api/v1/users/7`
-    }).then((res)=>{
-      let data = res.data.data[0]
-      setData(data)
-    }).catch((err)=>{
-      setData(err.message)
-    })
-  })
+  // React.useEffect(()=>{
+  //   Axios({
+  //     method: 'get',
+  //     url: `http://localhost:8000/api/v1/users/7`
+  //   }).then((res)=>{
+  //     let data = res.data.data[0]
+  //     setData(data)
+  //   }).catch((err)=>{
+  //     setData(err.message)
+  //   })
+  // })
 
   return (
     <Row>
@@ -58,10 +59,10 @@ const Reset = () => {
                   placeholder="Enter your email"
                 />
               </div>
-              <h5>{status}</h5>
+              <h6 className='text-center text-danger'>{isDone? '' : status}</h6>
               <div className="button btn second w-100">
                 <Link to="/new-password">
-                  <button onClick={email !== data.email ? setStatus('Email Not Found'):history.push('/new-password')} type="button" className="btn btn-lg btn-block">
+                  <button type="button" className="btn btn-lg btn-block">
                     <b>Confirm</b>
                   </button>
                 </Link>

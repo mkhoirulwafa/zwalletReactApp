@@ -6,23 +6,23 @@ import { Link } from "react-router-dom";
 //components
 import Button from "./Button";
 import IncomeExpense from "./IncomeExpense";
-import { TextBlock } from "react-placeholder/lib/placeholders";
+import { RectShape, TextBlock } from "react-placeholder/lib/placeholders";
 
 import "react-placeholder/lib/reactPlaceholder.css";
+import API from "../../../Services";
 
 const Balance = () => {
   const dispatch = useDispatch();
-  const { data, loading } = useSelector((s) => s.Users);
+  // const { data, loading } = useSelector((s) => s.Users);
   const Auth = useSelector((s) => s.Auth);
+  const [dataUser, setDataUser] = React.useState();
+  const [loading, setLoading] = React.useState(false);
 
   useEffect(() => {
-    dispatch(
-      getUsers({
-        id: Auth.data.id,
-        token: Auth.data.token,
-      })
-    );
-  }, [dispatch, Auth.data.id, Auth.data.token]);
+    API.Profile(Auth?.data?.token, Auth?.data?.id).then((res)=>{
+      setDataUser(res)
+    })
+  }, [dispatch, Auth]);
 
   return (
     <div className="col col-sm col-md col-lg">
@@ -41,13 +41,13 @@ const Balance = () => {
                   color="#eeeeee"
                 />
               ) : (
-                (data.balance === '') ? `Rp 0-,` : `Rp${data.balance}`
+                (dataUser?.balance === '') ? `Rp 0-,` : `Rp${dataUser?.balance}`
               )}
             </b>
             </h2>
             <br />
             <h6>
-              {data.phone === "" ? (
+              {dataUser?.phone === "" ? (
                 <Link to="add-phone" className="text-white">
                   Add your phone number
                 </Link>
@@ -60,7 +60,7 @@ const Balance = () => {
                   color="#f0f0f0"
                 />
               ) : (
-                `+${data.phone}`
+                `+${dataUser?.phone}`
               )}
             </h6>
           </div>

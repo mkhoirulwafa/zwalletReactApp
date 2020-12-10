@@ -14,45 +14,26 @@ import Descript from "../login/src/components/Description";
 // import { Link } from "react-router-dom";
 import { getUsers } from "./../../redux/actions/Users";
 import { useHistory } from "react-router-dom";
+import API from "../../Services";
 
 const Detail = (props) => {
   const history = useHistory()
+  const [dataUser, setDataUser] = React.useState();
+  const [loading, setLoading] = React.useState(false);
   const dispatch = useDispatch();
+  // const { data, loading } = useSelector((s) => s.Users);
+  const {data} = useSelector((s) => s.Auth);
 
-  const Auth = useSelector((s) => s.Auth);
-  const { data, loading } = useSelector((s) => s.Users);
 
   useEffect(() => {
-    dispatch(
-      getUsers({
-        token: Auth.data.token,
-        id: Auth.data.id,
-      })
-    );
-  }, [Auth.data.token, Auth.data.id, dispatch]);
-  let details = [
-    {
-      title: "First Name",
-      value: data.firstName,
-      trailing: false,
-    },
-    {
-      title: "Last Name",
-      value: data.lastName,
-      trailing: false,
-    },
-    {
-      title: "Verified E-mail",
-      value: data.email,
-      trailing: false,
-    },
-    {
-      title: "Phone Number",
-      value: `+${data.phone}`,
-      trailing: true,
-    },
-  ];
-  return details.map((item) => {
+    API.Profile(data?.token, data?.id).then((res)=>{
+      setDataUser(res)
+    })
+  }, [dispatch, data]);
+
+  const onDelete = ()=>{
+    
+  }
     return (
       <div className="row mt-3">
         <div className="col card border-0">
@@ -71,7 +52,7 @@ const Detail = (props) => {
                     color="#f0f0f0"
                   />
                 ) : (
-                  <p>{item.title}</p>
+                  <p>Primary</p>
                 )}
                 <h6>
                   {loading ? (
@@ -86,14 +67,12 @@ const Detail = (props) => {
                       color="#f0f0f0"
                     />
                   ) : (
-                    <b>{item.value}</b>
+                    <b>{dataUser?.phone}</b>
                   )}
                 </h6>
               </div>
               <div className="col-2 mt-3">
-                {!item.trailing ? (
-                  ""
-                ) : loading ? (
+                { loading ? (
                   <TextBlock
                     delay
                     showLoadingAnimation
@@ -105,16 +84,12 @@ const Detail = (props) => {
                     color="#f0f0f0"
                   />
                 ) : (
-                    <button
-                    type="submit"
-                    onClick={() =>
-                      history.push({
-                      })
-                    }
-                    className="btn second btn-lg text-black-50"
-                  >
-                    Manage
-                  </button>
+                    <img
+                  src='https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/trash.png?raw=true'
+                  className="list-icon float-left"
+                  alt=""
+                  onClick={()=> onDelete()}
+                />
                 )}
               </div>
             </div>
@@ -122,8 +97,7 @@ const Detail = (props) => {
         </div>
       </div>
     );
-  });
-};
+  }
 
 export default function PersonalInfo(props) {
   return (

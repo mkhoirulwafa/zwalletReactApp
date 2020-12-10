@@ -15,18 +15,18 @@ const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-
-  const { loading } = useSelector((s) => s.Auth);
+  const [loading, setLoading]= React.useState(false)
 
   const onSubmit = (e) => {
     e.preventDefault();
+    setLoading(true)
     dispatch(
       AuthLogin({
         email: email,
         password: password,
         history: props.history,
       })
-    );
+    ).then((res)=> setLoading(false))
   };
 
   return (
@@ -45,7 +45,7 @@ const Login = (props) => {
               <Descript
                 id="dark"
                 className="description"
-                content="Transfering money is eassier than ever, you can access Zwallet
+                content="Transfering money is easier than ever, you can access Zwallet
                   wherever you are. Desktop, laptop, mobile phone? we cover all
                   of that for you!"
               />
@@ -101,7 +101,7 @@ const Login = (props) => {
               <div className="sign-up text-center mt-3">
                 <p className="text">
                   Don’t have an account? Let’s{" "}
-                  <Link to="/signup" className="a bold primary">
+                  <Link to="/signup" className="a bold text-primary">
                     Sign Up
                   </Link>
                 </p>

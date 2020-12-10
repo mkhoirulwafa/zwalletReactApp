@@ -1,15 +1,22 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 //style
 import "../src/css/style.css";
 import "../login/src/css/login.css";
 import "./src/css/createpin.css"
 //components
-import InputPin from "../../Components/pin";
+import PinInputBorder from "../../Components/pin";
 import Descript from "../login/src/components/Description";
 
-class Signup extends React.Component {
-  render() {
+const Signup =(props)=> {
+  const [pin, setPin] = React.useState('')
+
+  const location = useLocation()
+
+  React.useEffect(()=>{
+    console.log(location)
+    console.log('=============saduhbfiksdbnf============')
+  })
     return (
       <div className="row">
         <div className="container bg col-sm-12 col-md-7 col-lg-7">
@@ -65,8 +72,8 @@ class Signup extends React.Component {
                 />
               </div>
               <div className="col-md-11">
-              <div className="form-group form-group-lg pin mr-lg-4 mr-md-3 mr-sm-1 mr-1 mb-md-5 mt-md-4">
-                <InputPin />
+              <div className="form-group form-group-lg pin mr-lg-4 mr-md-3 mr-sm-1 mr-1 mb-md-5 mt-md-4 d-flex flex-direction-row ">
+              <PinInputBorder className="col-2 px-lg-2 px-1 px-lg-0 p-1" length={6} onChange={value => setPin(value)} />
               </div>
                 <div className="button btn second w-100">
                   <Link to="/create-pin-success">
@@ -81,7 +88,6 @@ class Signup extends React.Component {
         </div>
       </div>
     );
-  }
 }
 
 export default Signup;

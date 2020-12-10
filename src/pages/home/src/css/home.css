@@ -93,3 +93,6 @@ a{
 .small {
   margin-top: -10;
 }
+.imgBorder {
+  box-sizing: border-box;
+}

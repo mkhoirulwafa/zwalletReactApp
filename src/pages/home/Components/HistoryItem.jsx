@@ -2,33 +2,38 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RectShape, TextBlock } from "react-placeholder/lib/placeholders";
 import "react-placeholder/lib/reactPlaceholder.css";
-import { getHistory } from "../../../redux/actions/Transfer";
+// import { getHistory } from "../../../redux/actions/Transfer";
+import API from "../../../Services";
+import '../src/css/home.css'
 
 export default function HistoryItems(props) {
   // let [data, setData] = React.useState([])
   const dispatch = useDispatch();
-
+  const [historyData, setHistoryData] = React.useState()
+  const [limit, setLimit] = React.useState(4)
   const Auth = useSelector((s) => s.Auth);
-  let { data, loading } = useSelector((s) => s.History);
+  const [ loading, setLoading] = React.useState(false)
+  let { data } = useSelector((s) => s.History);
 
   React.useEffect(() => {
-    dispatch(
-      getHistory({
-        token: Auth.data.token,
-        id: Auth.data.id,
-      })
-    );
-  }, [dispatch, Auth.data.id, Auth.data.token]);
-
+    // console.log('sadlnawjndajwndkj')
+    API.HistoryTransaction(Auth.data.token, Auth.data.id, limit)
+    .then((res)=>{
+      setHistoryData(res)
+      // setHistoryData(res)
+    })
+  }, [dispatch, Auth.data.id, Auth.data.token, limit]);
+console.log('==========')
+console.log(historyData)
   if (props !== null) {
     const slice = (start, end) => {
       return data = data.slice(start, end);
     };
     slice(props.start, props.end);
   }
-  return data.map((item) => {
+  return data?.map((item, index) => {
     return (
-      <div className="container mb-3">
+      <div className="container mb-3" key={index}>
         <div className="row text-sm-center text-center">
           <div className="col-sm-8 col-md-8">
             <div className="row small mb-1">
@@ -42,6 +47,9 @@ export default function HistoryItems(props) {
                   />
                 ) : (
                   <img
+                    width={50}
+                    height={50}
+                    className='imgBorder'
                     src={
                       item.income === 1
                         ? (item.sender_avatar==='') ? "https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/prof/blank.png?raw=true": item.sender_avatar

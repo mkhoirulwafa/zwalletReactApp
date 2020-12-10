@@ -48,7 +48,7 @@ export default function Li (props) {
   let path = props.location.pathname;
   return sideNav.map((item) => {
     return (
-      <Link to={item.path}>
+      <Link to={item.path} key={item.id}>
         <li
           key={item.id}
           className={

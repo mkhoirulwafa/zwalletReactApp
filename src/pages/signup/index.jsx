@@ -1,14 +1,39 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 //style
 import "../src/css/style.css";
 import "../login/src/css/login.css";
 //components
 import Input from "../../Components/input";
 import Descript from "../login/src/components/Description";
+import { useDispatch, useSelector } from "react-redux";
+import API from '../../Services'
 
-class Signup extends React.Component {
-  render() {
+const Signup =(props)=> {
+  const [username, setUsername]= React.useState('')
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const dispatch = useDispatch();
+
+  const { loading } = useSelector((s) => s.Auth);
+  const history = useHistory()
+
+  const onSubmit = (e) => {
+    let data = {firstName: username.split(' ')[0],lastName: username.split(' ')[1], email: email, password: password}
+    API.Register(data).then((res) => history.push({
+      pathname: '/create-pin',
+      state: {  // location state
+        token: res.token, 
+      },
+    })).catch((err)=> console.log(err))
+    // dispatch(
+    //   AuthLogin({
+    //     email: email,
+    //     password: password,
+    //     history: props.history,
+    //   })
+    // );
+  };
     return (
       <div className="row">
         <div className="container bg col-sm-12 col-md-7 col-lg-7">
@@ -35,13 +60,10 @@ class Signup extends React.Component {
           </div>
           <div className="row ml-3 ml-sm-3 ml-md-2">
             <div className="col-sm-12 offset-md-2 col-md-8 col-xs mb-5">
-              <Descript
-                className="description light"
-                content="Zwallet is an application that focussing in banking needs for
+              <p className='text-white'>Zwallet is an application that focussing in banking needs for
                 all users in the world. Always updated and always following
                 world trends. 5000+ users registered in Zwallet everyday with
-                worldwide users coverage."
-              />
+                worldwide users coverage.</p>
             </div>
           </div>
         </div>
@@ -69,6 +91,7 @@ class Signup extends React.Component {
                     classIcon="username"
                     classInput="username"
                     placeholder="Enter your username"
+                    onChange={(e)=> setUsername(e.target.value)}
                   />
                 </div>
                 <div className="email input">
@@ -76,6 +99,7 @@ class Signup extends React.Component {
                     classIcon="mail"
                     classInput="email"
                     placeholder="Enter your email"
+                    onChange={(e)=> setEmail(e.target.value)}
                   />
                 </div>
                 <div className="password input">
@@ -84,18 +108,19 @@ class Signup extends React.Component {
                     classInput="password"
                     placeholder="Enter your password"
                     visibility="eye"
+                    onChange={(e)=> setPassword(e.target.value)}
                   />
                 </div>
                 <div className="button btn second w-100">
-                  <Link to="/create-pin">
-                    <button type="button" className="btn btn-lg btn-block">
+                  {/* <Link to="/create-pin"> */}
+                    <button type="submit" className="btn btn-lg btn-block" onClick={()=> onSubmit()}>
                       <b>Sign Up</b>
                     </button>
-                  </Link>
+                  {/* </Link> */}
                 </div>
                 <div className="sign-up text-center mt-3 ">
                   <p className="text">
-                    Already have an account? Let’s <Link to='/' className='a bold primary'>Login</Link>
+                    Already have an account? Let’s <Link to='/' className='a bold text-primary'>Login</Link>
                   </p>
                 </div>
               </div>
@@ -104,7 +129,6 @@ class Signup extends React.Component {
         </div>
       </div>
     );
-  }
 }
 
 export default Signup;

@@ -6,24 +6,23 @@ import { Nav } from "react-bootstrap";
 // import Li from "./SidenavContent";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers } from "./../redux/actions/Users";
-
+import API from "../Services";
+// import { getUsers } from "./../redux/actions/Users";
+import './styles.css'
 export default function Navbar(props) {
-  // const [data, setData] = React.useState([]);
+  const [dataUser, setDataUser] = React.useState();
+  const [loading, setLoading] = React.useState(false);
   const dispatch = useDispatch();
-  const { data, loading } = useSelector((s) => s.Users);
-  const Auth = useSelector((s) => s.Auth);
+  // const { data, loading } = useSelector((s) => s.Users);
+  const {data} = useSelector((s) => s.Auth);
 
   // console.log(`${Auth.data},  HALOOOO`);
 
   React.useEffect(() => {
-    dispatch(
-      getUsers({
-        id: Auth.data.id,
-        token: Auth.data.token,
-      })
-    );
-  }, [dispatch, Auth.data.id, Auth.data.token]);
+    API.Profile(data?.token, data?.id).then((res)=>{
+      setDataUser(res)
+    })
+  }, [dispatch, data]);
 
   return (
     <Nav className="navbar navbar-expand-lg bg-light my-navbar">
@@ -51,12 +50,14 @@ export default function Navbar(props) {
                 <div className="col-3 col-sm-3 col-md-3">
                   <div className="container">
                     <img
+                    width={50}
+                    height={60}
                       src={
                         data.avatar === ""
                           ? "https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/prof/blank.png?raw=true"
-                          : data.avatar
+                          : dataUser?.avatar
                       }
-                      className="avatar rounded"
+                      className="avatar rounded imgBorder box-sizing-border-box"
                       alt=""
                     />
                   </div>
@@ -79,7 +80,7 @@ export default function Navbar(props) {
                               color="#f0f0f0"
                             />
                           ) : (
-                            data.firstName + " " + data.lastName
+                            dataUser?.firstName + " " + dataUser?.lastName
                           )}
                         </b>
                       </p>
@@ -101,7 +102,7 @@ export default function Navbar(props) {
                             Add your phone number
                           </Link>
                         ) : (
-                          `+${data.phone}`
+                          `+${dataUser?.phone}`
                         )}
                       </span>
                     </div>

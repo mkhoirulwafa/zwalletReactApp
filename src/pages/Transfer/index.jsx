@@ -12,22 +12,21 @@ import Footer from "../../Components/Footer";
 import "../src/css/style.css";
 import "./src/css/transfer.css";
 import Loading from "./Components/Loading";
+import API from "../../Services";
 
 const Receiver = (props) => {
   const [key, setKey] = React.useState(``);
+  const [dataUsers, setDataUsers] = React.useState();
+  const [loading, setLoading] = React.useState(false);
   const dispatch = useDispatch();
   const Auth = useSelector((s) => s.Auth);
-  const { data, loading } = useSelector((s) => s.Transfer);
+  // const { data, loading } = useSelector((s) => s.Transfer);
 
   React.useEffect(() => {
-    dispatch(
-      getSearch({
-        token: Auth.data.token,
-        id: Auth.data.id,
-        key: key,
-      })
-    );
-  }, [key, dispatch, Auth.data.id, Auth.data.token]);
+    API.Search(Auth.data.token, key, props.limit).then((res)=>{
+      setDataUsers(res)
+    })
+  }, [key, dispatch, Auth.data.token, props.limit]);
 
   let imgDefault =
     "https://github.com/mkhoirulwafa/zwallet-project/blob/master/assets/prof/blank.png?raw=true";
@@ -52,7 +51,7 @@ const Receiver = (props) => {
       {loading ? (
         <Loading />
       ) : (
-        data.map((item) => {
+        dataUsers?.map((item) => {
           return (
             <>
               <div
@@ -77,7 +76,7 @@ const Receiver = (props) => {
                           <div className="col-2 col-sm-2 col-md-2 col-lg-1">
                             <img
                               src={item.avatar==='' ? imgDefault : item.avatar}
-                              alt=""
+                              alt="" width={50} height={50}
                             />
                           </div>
                           <div className="col-10 col-sm-10 col-md-10 col-lg-11 pl-5 pl-sm-5 pt-1">
@@ -101,16 +100,20 @@ const Receiver = (props) => {
 };
 
 const Transfer = (props) => {
+  const [limit, setLimit] = React.useState(4);
   return (
     <>
       <Nav />
       <div className="container">
         <div className="row mr-5 ml-5">
           <SideNav />
-          <div className="col-12 col-sm-10 col-md-8 col-lg-9">
+          <div className="col-12 col-sm-12 col-md-10 col-lg-9">
             <div className="container card min-vh-100">
               <div className="container">
-                <Receiver {...props} />
+                <Receiver {...props} limit={limit} />
+                <div className='text-center m-3'>
+                  <a className='text-primary' onClick={()=> setLimit(limit+3)}>Load More</a>
+                </div>
               </div>
             </div>
           </div>

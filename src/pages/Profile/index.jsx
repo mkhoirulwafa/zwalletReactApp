@@ -12,20 +12,21 @@ import "../Topup/src/css/topup.css";
 import { useHistory } from "react-router-dom";
 import { getUsers } from "./../../redux/actions/Users";
 import ButtonModal from "./Components/ModalUpload";
+import API from "../../Services";
 
 const ProfileData = () => {
+  const [dataUser, setDataUser] = React.useState();
+  const [loading, setLoading] = React.useState(false);
   const dispatch = useDispatch();
-  const { data, loading } = useSelector((s) => s.Users);
-  const Auth = useSelector((s) => s.Auth);
-  useEffect(() => {
-    dispatch(
-      getUsers({
-        id: Auth.data.id,
-        token: Auth.data.token,
-      })
-    );
-  }, [dispatch, Auth.data.id, Auth.data.token]);
-  console.log(data);
+  // const { data, loading } = useSelector((s) => s.Users);
+  const {data} = useSelector((s) => s.Auth);
+
+
+  React.useEffect(() => {
+    API.Profile(data?.token, data?.id).then((res)=>{
+      setDataUser(res)
+    })
+  }, [dispatch, data]);
 
   return (
     <div className="row text-center mt-5">
@@ -42,7 +43,7 @@ const ProfileData = () => {
                     color="#f0f0f0"
                   />
                 ) : (
-                  data.avatar
+                  dataUser?.avatar
                 )
               }
               alt=""
@@ -52,7 +53,7 @@ const ProfileData = () => {
             <br />
           </div>
         </div>
-        <div className="row ">
+        <div className="row justify-content-center">
           <ButtonModal/>
         </div>
         <div className="row ">
@@ -71,7 +72,7 @@ const ProfileData = () => {
                   color="#f0f0f0"
                 />
               ) : (
-                data.firstName + " " + data.lastName
+                dataUser?.firstName + " " + dataUser?.lastName
               )}
             </b>
           </h6>

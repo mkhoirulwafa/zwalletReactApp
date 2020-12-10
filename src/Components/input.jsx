@@ -10,6 +10,7 @@ function Input(props) {
           type={props.classInput}
           placeholder={props.placeholder}
           autoComplete= 'off'
+          onChange={props.onChange}
           required
         />
         <img
@@ -22,12 +23,13 @@ function Input(props) {
   } else {
     return (
       <>
-        <span className='mail'></span>
+        <span className={props.classIcon}></span>
         <input
-          id='email'
-          type='email'
-          placeholder='Enter your email here'
+          id={props.classInput}
+          type={props.classInput}
+          placeholder={props.placeholder}
           autoComplete= 'off'
+          onChange={props.onChange}
           required
         />
       </>
